@@ -71,6 +71,9 @@ public class StringSpliter {
             tagattributes = str.substring(space_index + 1, tag_index);
         }
 
+        if(str.indexOf("</"+tagname+">")==-1)
+            return;
+
         String txt_btw_tg = str.substring(str.indexOf(">")+1,str.indexOf("</"+tagname+">")); // text between tags
 
         txt_btw_tg.trim();
@@ -86,6 +89,9 @@ public class StringSpliter {
 
         if(!txt_btw_tg.isEmpty())
             split(txt_btw_tg,newtag);
+
+        if(str.indexOf("</"+tagname+">")==-1)
+            return;
 
         str = str.substring(str.indexOf("</"+tagname+">")+("</"+tagname+">").length());
         str.trim();
