@@ -4,19 +4,16 @@ import java.io.File;
 
 public final class FileReader {
 
-    private static File getFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if (fileChooser.showOpenDialog(null) == JFileChooser.CANCEL_OPTION)
-            return null;
-        else
-            return fileChooser.getSelectedFile();
-    }
-
     public static String readHTML() {
         String text = "";
         try {
-            File file = getFile();
+            File file;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            if (fileChooser.showOpenDialog(null) == JFileChooser.CANCEL_OPTION)
+                return null;
+            else
+                file = fileChooser.getSelectedFile();
             BufferedReader reader = new BufferedReader(new java.io.FileReader(file.getPath()));
             StringBuilder sBuilder = new StringBuilder();
             String line;
