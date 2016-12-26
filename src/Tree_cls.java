@@ -72,32 +72,48 @@ class TagNode
     }
 }
 
-public class Tree_cls
-{
+public class Tree_cls {
 
     private TagNode root;
-    private ArrayList<TagNode> tmp;
 
-    ArrayList<ArrayList<TagNode>> Search(TagNode node)  //search a tag only by it's tag name
-    {
-        ArrayList<ArrayList<TagNode>> finds;
-
-        return null;
+    void DFS(ArrayList<ArrayList<TagNode>> ans, ArrayList<TagNode> currentpath, TagNode root, TagNode find) {
+        currentpath.add(root);
+        if (root == find) {
+            ans.add(currentpath);
+        }
+        for (TagNode n :
+                root.getChildren()) {
+            DFS(ans, currentpath, n, find);
+        }
+        currentpath.remove(currentpath.size() - 1);
     }
 
-    void AddNode(TagNode parentnode, TagNode newnode)
+
+
+    // it must test
+    ArrayList<ArrayList<TagNode>> Search(TagNode node)  //search a tag only by it's tag name and return all of them
     {
+        ArrayList<ArrayList<TagNode>> finds = new ArrayList<>();
+        DFS(finds, new ArrayList<TagNode>(), root, node);
+        return finds;
+    }
+
+    void AddNode(TagNode parentnode, TagNode newnode) {
         parentnode.getChildren().add(newnode);
     }
 
-    void DeleteNode(TagNode node)
-    {
+    void DeleteNode(TagNode node) {
         node.getParent().getChildren().remove(node);
+
     }
 
-//    void EditNode(TagNode node)
-//    {
-//
-//    }
+    void DeleteTag(String tag)
+    {
+        // Alireza must complete it using Search function
+    }
+    void EditNode(TagNode node)
+    {
+
+    }
 
 }
