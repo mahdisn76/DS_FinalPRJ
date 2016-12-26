@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class StringSpliter {
     public static void split(String str,TagNode parent)
     {
-        str.trim();
+        str = str.trim();
         if(str.isEmpty())
             return ;
         if(!str.contains("<"))
@@ -47,7 +47,7 @@ public class StringSpliter {
                 str="";
             }
         }
-        str.trim();
+        str = str.trim();
         if(str.isEmpty())
         {
             return;
@@ -71,11 +71,14 @@ public class StringSpliter {
             tagattributes = str.substring(space_index + 1, tag_index);
         }
 
+        if(str.indexOf("</"+tagname+">")==-1)
+            return;
+
         String txt_btw_tg = str.substring(str.indexOf(">")+1,str.indexOf("</"+tagname+">")); // text between tags
 
-        txt_btw_tg.trim();
-        tagname.trim();
-        tagattributes.trim();
+        txt_btw_tg=txt_btw_tg.trim();
+        tagname=tagname.trim();
+        tagattributes=tagattributes.trim();
 
         TagNode newtag = new TagNode(parent,null,tagname,tagattributes,null);
 
@@ -87,8 +90,11 @@ public class StringSpliter {
         if(!txt_btw_tg.isEmpty())
             split(txt_btw_tg,newtag);
 
+        if(str.indexOf("</"+tagname+">")==-1)
+            return;
+
         str = str.substring(str.indexOf("</"+tagname+">")+("</"+tagname+">").length());
-        str.trim();
+        str=str.trim();
 
         if(!str.isEmpty())
             split(str,parent);
@@ -109,6 +115,5 @@ public class StringSpliter {
                 "</html>";
         TagNode root = new TagNode(null,null,null,null,null);
         split(test,root);
-
     }
 }

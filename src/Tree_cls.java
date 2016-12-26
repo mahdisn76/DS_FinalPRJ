@@ -1,3 +1,4 @@
+import javax.swing.text.html.HTML;
 import java.util.ArrayList;
 
 /**
@@ -74,6 +75,43 @@ class TagNode
     {
         return (TagName==o.TagName);
     }  // comparing two tags only by their names
+
+    String toString (int tabnum)
+    {
+        if(TagName==null)
+            return null;
+
+        String ans="";
+        for (int i = 0; i < tabnum; i++) {
+            ans+="\t";
+        }
+        ans+="<"+TagName;
+        if(TagAttribute!=null)
+            ans+=" " + TagAttribute;
+        ans+=">\n";
+
+        if(TagData!=null)
+        {
+            for (int i = 0; i < tabnum+1; i++) {
+                ans+="\t";
+            }
+            ans+=TagData+"\n";
+        }
+
+        if(Children!=null)
+            for (TagNode t :
+                    Children)
+            {
+                ans+=t.toString(tabnum+1)+"\n";
+            }
+
+        for (int i = 0; i < tabnum; i++)
+        {
+            ans+="\t";
+        }
+        ans+="</"+TagName+">";
+        return ans;
+    }
 }
 
 public class Tree_cls {
@@ -127,6 +165,13 @@ public class Tree_cls {
     void EditNode(TagNode node)
     {
 
+    }
+
+    String ToString(TagNode root)
+    {
+        if(root==null)
+            return null;
+        return root.toString(0);
     }
 
 }
