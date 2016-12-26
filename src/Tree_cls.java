@@ -73,7 +73,7 @@ class TagNode
     public boolean equals(TagNode o)
     {
         return (TagName==o.TagName);
-    }  // comparing two tags only by its names
+    }  // comparing two tags only by their names
 }
 
 public class Tree_cls {
@@ -118,7 +118,6 @@ public class Tree_cls {
     void DeleteNode(TagNode node)  // delete a node and also delete it from
     {
         node.getParent().getChildren().remove(node);
-
     }
 
     void DeleteTag(String tag)
