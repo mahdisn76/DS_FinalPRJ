@@ -1,5 +1,3 @@
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.io.File;
 
 /**
@@ -15,6 +13,4 @@ public class main {
         System.out.println("_____________________________");
         System.out.println(root.getChildren().get(0).toString(0));
     }
-
-
 }
