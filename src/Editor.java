@@ -12,7 +12,7 @@ public class Editor extends JFrame {
     private Editor() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("TableFlipperZ HTML Editor");
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.jpg")));
+      //  setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.jpg")));
         getContentPane().setLayout(new BorderLayout());
 
         // Create top panel

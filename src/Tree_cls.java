@@ -1,5 +1,5 @@
-import javax.swing.text.html.HTML;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by MSN on 12/25/2016.
@@ -122,15 +122,16 @@ public class Tree_cls {
             and some functions
      */
 
-    private TagNode root;
+    private static TagNode root;
 
-    void DFS(ArrayList<ArrayList<TagNode>> ans, ArrayList<TagNode> currentpath, TagNode root, TagNode find)
+    public static void DFS(ArrayList<ArrayList<TagNode>> ans, ArrayList<TagNode> currentpath, TagNode root, TagNode find)
     {
         // DFS on the tree
         currentpath.add(root);
         if (root == find) {
             ans.add(currentpath);
         }
+
         for (TagNode n :
                 root.getChildren()) {
             DFS(ans, currentpath, n, find);
@@ -141,33 +142,70 @@ public class Tree_cls {
 
 
     // it must test
-    ArrayList<ArrayList<TagNode>> Search(TagNode node)  //search a tag only by it's tag name and return all of them
+    public static ArrayList<ArrayList<TagNode>> Search(TagNode node)  //search a tag only by it's tag name and return all of them
     {
         ArrayList<ArrayList<TagNode>> finds = new ArrayList<>();
         DFS(finds, new ArrayList<TagNode>(), root, node);
         return finds;
     }
 
-    void AddNode(TagNode parentnode, TagNode newnode) // add a new child to it's parent
+    public static void AddNode(TagNode parentnode, TagNode newnode) // add a new child to it's parent
     {
         parentnode.getChildren().add(newnode);
     }
 
-    void DeleteNode(TagNode node)  // delete a node and also delete it from
+    public static void DeleteNode(TagNode node)  // delete a node and also delete it from
     {
         node.getParent().getChildren().remove(node);
     }
 
-    void DeleteTag(String tag)
+    public static void DeleteTag(String tag)
     {
         // Alireza must complete it using Search function
+
+        TagNode node = new TagNode(null,null,tag,null,null);
+
+        ArrayList<ArrayList<TagNode>> finds = new ArrayList<>();
+        finds = Search(node);
+
+        if(finds.size() > 1) {
+            System.out.println("There are some " + tag + "\n which one do you want?");
+            for (int i = 0; i < finds.size(); i++) {
+                System.out.print(i+1);
+                for (int j = 0; j < finds.get(i).size(); j++)
+                    System.out.println("->" + finds.get(i).get(j));
+            }
+            Scanner reader = new Scanner(System.in);
+            int x = reader.nextInt();
+            DeleteNode(finds.get(x-1).get(finds.get(x-1).size()-1));
+        }
+        else if(finds.size() == 1)
+        {
+            DeleteNode(finds.get(0).get(finds.get(0).size()-1));
+        }
+        else
+        {
+            System.out.println("There no tag with this name ");
+        }
+
     }
-    void EditNode(TagNode node)
+
+    public static void EditNode(TagNode node)
     {
-
+        Scanner reader = new Scanner(System.in);
+        System.out.print("Enter new tag name:");
+        String tagName = reader.next();
+        System.out.println("Enter new tag attribute: ");
+        String tagAtt = reader.next();
+        System.out.println("Enter new tagData :");
+        String tagData = reader.next();
+        //--------------------------------------- Get  new name,attribute,data
+        node.setTagAttribute(tagAtt);
+        node.setTagData(tagData);
+        node.setTagName(tagName);
     }
 
-    String ToString(TagNode root)
+    public String ToString(TagNode root)
     {
         if(root==null)
             return null;
