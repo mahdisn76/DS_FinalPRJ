@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -9,7 +8,7 @@ public class main {
         //System.out.println("1.Add a Node \n 2.Delete a Node and keep its child \n 3.Delete a Node with its child \n 4.Edit Tag");
 
         TagNode root = new TagNode(null,null,null,null,null);
-        StringSpliter.split(FileIO.read(),root);
+        StringSpliter.split(FileIO.read(false),root);
         if(root.getChildren()!=null || root.getChildren().get(0)!=null)
             FileIO.write(root.getChildren().get(0).toString(0));
     }

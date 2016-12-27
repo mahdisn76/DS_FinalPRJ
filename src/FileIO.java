@@ -3,7 +3,7 @@ import java.io.*;
 
 public final class FileIO {
 
-    public static String read() {
+    public static String read(boolean newLine) {
         String text = "";
         BufferedReader reader = null;
         JFileChooser fileChooser = new JFileChooser();
@@ -14,8 +14,10 @@ public final class FileIO {
                 reader = new BufferedReader(new FileReader(file.getPath()));
                 StringBuilder sBuilder = new StringBuilder();
                 String line;
-                while ((line = reader.readLine()) != null)
+                while ((line = reader.readLine()) != null) {
                     sBuilder.append(line);
+                    if (newLine) sBuilder.append("\n");
+                }
                 text = sBuilder.toString();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Error while opening file", "Error", JOptionPane.ERROR_MESSAGE);
@@ -45,10 +47,10 @@ public final class FileIO {
                     writer.write(line);
                     writer.newLine();
                 }
-            }catch (IOException e){
+            } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Error while saving file", "Error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-            }finally {
+            } finally {
                 if (writer != null)
                     try {
                         writer.close();
