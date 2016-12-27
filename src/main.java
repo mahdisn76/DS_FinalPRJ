@@ -12,9 +12,9 @@ public class main {
         StringSpliter.split(FileIO.read(false),MainTree.getRoot());
 
         boolean repeat = true;
+        System.out.println("\n***********************----WELCOME----***********************");
 
 while(repeat) {
-    System.out.println("\n***********************----WELCOME----***********************");
     System.out.println(" 1.Add a Tag \n 2.Delete a Tag and keep its children \n 3.Delete a Tag with its child \n 4.Edit Tag");
     System.out.println(" 5.Show Tree \n 0.Save and Exit");
     int input;
@@ -53,7 +53,11 @@ while(repeat) {
             repeat =false;
             break;
 
+
+
     }
+    System.out.println("\n***********************---------------------***********************");
+
 }
         if(MainTree.getRoot().getChildren()!=null || MainTree.getRoot().getChildren().get(0)!=null) {
             FileIO.write(MainTree.getRoot().getChildren().get(0).toString(0));
