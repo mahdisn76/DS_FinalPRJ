@@ -14,6 +14,8 @@ public class main {
             FileIO.write(root.getChildren().get(0).toString(0));
 
 
+        Tree_cls mytree = new Tree_cls();
+
         System.out.println(" 1.Add a Tag \n 2.Delete a Tag and keep its children \n 3.Delete a Tag with its child \n 4.Edit Tag \n 5.Add a attribute to Tag");
         System.out.println(" 6.Delete Tag attribute \n 7.Edit Tag attribute \n 8.Show Tree");
         int input;

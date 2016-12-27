@@ -19,7 +19,17 @@ class TagNode
     private String TagAttribute;
     private String TagData;
 
-    public TagNode(TagNode parent, ArrayList<TagNode> children, String tagName, String tagAttribute, String tagData) {
+    public TagNode()
+    {
+        Parent       = null;
+        Children     = null;
+        TagName      = null;
+        TagAttribute = null;
+        TagData      = null;
+    }
+
+    public TagNode(TagNode parent, ArrayList<TagNode> children, String tagName, String tagAttribute, String tagData)
+    {
         Parent = parent;
         Children = children;
         TagName = tagName;
@@ -73,8 +83,8 @@ class TagNode
 
     public boolean equals(TagNode o)
     {
-        return (TagName==o.TagName);
-    }  // comparing two tags only by their names
+        return (TagName.equals(o.getTagName()));
+    }
 
     String toString (int tabnum)
     {
@@ -122,44 +132,62 @@ public class Tree_cls {
             and some functions
      */
 
-    private static TagNode root;
+    private TagNode root;
 
-    public static void DFS(ArrayList<ArrayList<TagNode>> ans, ArrayList<TagNode> currentpath, TagNode root, TagNode find)
+    public TagNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TagNode root) {
+        this.root = root;
+    }
+
+    Tree_cls()
+    {
+        root=new TagNode();
+    }
+
+
+
+    void DFS(ArrayList<ArrayList<TagNode>> ans, ArrayList<TagNode> currentpath, TagNode root, TagNode find)
     {
         // DFS on the tree
         currentpath.add(root);
-        if (root == find) {
-            ans.add(currentpath);
-        }
 
-        for (TagNode n :
-                root.getChildren()) {
-            DFS(ans, currentpath, n, find);
-        }
+        if(root.getTagName()!=null)
+            if (root.equals(find))
+            {
+                ans.add(new ArrayList<TagNode>(currentpath));
+            }
+
+        if(root.getChildren()!=null)
+            for (TagNode n : root.getChildren())
+                DFS(ans, currentpath, n, find);
+
         currentpath.remove(currentpath.size() - 1);
     }
 
 
 
     // it must test
-    public static ArrayList<ArrayList<TagNode>> Search(TagNode node)  //search a tag only by it's tag name and return all of them
+    ArrayList<ArrayList<TagNode>> Search(TagNode node)  //search a tag only by it's tag name and return all of them
     {
         ArrayList<ArrayList<TagNode>> finds = new ArrayList<>();
         DFS(finds, new ArrayList<TagNode>(), root, node);
         return finds;
     }
 
-    public static void AddNode(TagNode parentnode, TagNode newnode) // add a new child to it's parent
+    void AddNode(TagNode parentnode, TagNode newnode) // add a new child to it's parent
     {
         parentnode.getChildren().add(newnode);
     }
 
-    public static void DeleteNode(TagNode node)  // delete a node and also delete it from
+    void DeleteNode(TagNode node)  // delete a node and also delete it from
     {
         node.getParent().getChildren().remove(node);
     }
 
-    public static void DeleteTag(String tag)
+    void DeleteTag(String tag)
     {
         // Alireza must complete it using Search function
 
