@@ -8,13 +8,14 @@ public class main {
     public static void main(String[] args) throws IOException {
         //System.out.println("1.Add a Node \n 2.Delete a Node and keep its child \n 3.Delete a Node with its child \n 4.Edit Tag");
 
-        TagNode root = new TagNode(null,null,null,null,null);
-        StringSpliter.split(FileIO.read(false),root);
-        if(root.getChildren()!=null || root.getChildren().get(0)!=null)
-            FileIO.write(root.getChildren().get(0).toString(0));
+        Tree_cls MainTree = new Tree_cls();  // this is the main tree of program ... that all of html file is in it
+
+        StringSpliter.split(FileIO.read(false),MainTree.getRoot());
+        if(MainTree.getRoot().getChildren()!=null || MainTree.getRoot().getChildren().get(0)!=null) {
+            FileIO.write(MainTree.getRoot().getChildren().get(0).toString(0));
+        }
 
 
-        Tree_cls mytree = new Tree_cls();
 
         System.out.println(" 1.Add a Tag \n 2.Delete a Tag and keep its children \n 3.Delete a Tag with its child \n 4.Edit Tag \n 5.Add a attribute to Tag");
         System.out.println(" 6.Delete Tag attribute \n 7.Edit Tag attribute \n 8.Show Tree");
@@ -43,7 +44,7 @@ public class main {
             case 3:
                 System.out.print("Enter tag name:");
                 String Tagname = reader.next();
-                Tree_cls.DeleteTag(Tagname);
+                MainTree.DeleteTag(Tagname);
                 break;
 
             case 4:
