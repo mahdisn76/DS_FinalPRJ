@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="092f88bd-208e-4e8a-8954-89a6807181db" name="Default" comment="Add and Edit func (maybe exception)">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/User_input.java" />
+    <list default="true" id="092f88bd-208e-4e8a-8954-89a6807181db" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Editor.java" afterPath="$PROJECT_DIR$/src/Editor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Tree_cls.java" afterPath="$PROJECT_DIR$/src/Tree_cls.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.java" afterPath="$PROJECT_DIR$/src/main.java" />
     </list>
     <ignored path="DS_FinalProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -624,7 +620,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482766408913</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add and Edit func (maybe exception)">
+      <created>1482846860481</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1482846860481</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
