@@ -214,17 +214,32 @@ Scanner reader = new Scanner(System.in);
 
     void DeleteTagWithChildren(String tag)
     {
+
         TagNode considerNode = findSameNames(tag);
+        if (considerNode == null){
+            System.out.println("there is no node with this name");
+            return;
+        }
         DeleteNode(considerNode);
 
     }
     void DeleteTagKeepChildren(String tag)
     {
+
         TagNode considerNode = findSameNames(tag);
-        ArrayList<TagNode> parentChildren = considerNode.getParent().getChildren();
-        for(TagNode n:considerNode.getChildren())
-            parentChildren.add(n);
-        considerNode.getParent().setChildren(parentChildren);
+        if (considerNode == null){
+            System.out.println("there is no node with this name");
+            return;
+        }
+
+        if(considerNode.getChildren() !=null){
+            ArrayList<TagNode> parentChildren = considerNode.getParent().getChildren();
+
+//            for(TagNode n:considerNode.getChildren())
+//            parentChildren.add(n);
+            for(int i=0;i<considerNode.getChildren().size();i++)
+                parentChildren.add(considerNode.getChildren().get(i));
+        considerNode.getParent().setChildren(parentChildren);}
         DeleteNode(considerNode);
 
     }

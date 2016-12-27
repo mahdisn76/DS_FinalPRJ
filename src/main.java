@@ -22,25 +22,25 @@ while(repeat) {
     input = reader.nextInt();
     switch (input) {
         case 1:
-            System.out.print("set parent: ");
+            System.out.print("Enter Parent Tag Name: ");
             String parentname = reader.next();
             MainTree.AddNode(parentname);
             break;
 
         case 2:
-            System.out.print("Enter tag name: ");
+            System.out.print("Enter Tag Name: ");
             String tagname = reader.next();
             MainTree.DeleteTagKeepChildren(tagname);
             break;
 
         case 3:
-            System.out.print("Enter tag name: ");
+            System.out.print("Enter Tag Name: ");
             String Tagname = reader.next();
             MainTree.DeleteTagWithChildren(Tagname);
             break;
 
         case 4:
-            System.out.print("Enter tag name: ");
+            System.out.print("Enter Tag Name: ");
             String previosname = reader.next();
             MainTree.EditNode(previosname);
             break;
