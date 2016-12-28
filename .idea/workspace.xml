@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="092f88bd-208e-4e8a-8954-89a6807181db" name="Default" comment="Tree.ToString and FileIO tested ...">
+    <list default="true" id="092f88bd-208e-4e8a-8954-89a6807181db" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Editor.java" afterPath="$PROJECT_DIR$/src/Editor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Tree_cls.java" afterPath="$PROJECT_DIR$/src/Tree_cls.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.java" afterPath="$PROJECT_DIR$/src/main.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/StringSpliter.java" afterPath="$PROJECT_DIR$/src/StringSplitter.java" />
     </list>
     <ignored path="DS_FinalProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/src/Tree_cls.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-3212">
-              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+              <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#toString#0;class#TagNode#0" expanded="false" />
@@ -153,8 +149,8 @@
         <option value="$PROJECT_DIR$/src/main.java" />
         <option value="$PROJECT_DIR$/src/Editor.java" />
         <option value="$PROJECT_DIR$/src/StringSpliter.java" />
-        <option value="$PROJECT_DIR$/src/Tree_cls.java" />
         <option value="$PROJECT_DIR$/src/StringSplitter.java" />
+        <option value="$PROJECT_DIR$/src/Tree_cls.java" />
       </list>
     </option>
   </component>
@@ -637,7 +633,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482849220173</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="SingleTag">
+      <created>1482926368232</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1482926368232</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -697,7 +700,8 @@
     <MESSAGE value="Tree.ToString and FileIO tested ..." />
     <MESSAGE value="DFS and Search OK" />
     <MESSAGE value="maintree of programm added" />
-    <option name="LAST_COMMIT_MESSAGE" value="maintree of programm added" />
+    <MESSAGE value="SingleTag" />
+    <option name="LAST_COMMIT_MESSAGE" value="SingleTag" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1098,7 +1102,7 @@
     <entry file="file://$PROJECT_DIR$/src/Tree_cls.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3212">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#toString#0;class#TagNode#0" expanded="false" />
