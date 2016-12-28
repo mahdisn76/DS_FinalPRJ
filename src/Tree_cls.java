@@ -18,26 +18,37 @@ class TagNode
     private String TagName;
     private String TagAttribute;
     private String TagData;
+    private boolean isSingleTag;
 
     public TagNode()
     {
         Parent       = null;
-        Children     = null;
+        Children     = new ArrayList<>();
         TagName      = null;
         TagAttribute = null;
         TagData      = null;
+        isSingleTag  = false;
     }
 
-    public TagNode(TagNode parent, ArrayList<TagNode> children, String tagName, String tagAttribute, String tagData)
+    public TagNode(TagNode parent, ArrayList<TagNode> children, String tagName, String tagAttribute, String tagData , boolean issingletag)
     {
         Parent = parent;
         Children = children;
+        if(children==null)
+            children = new ArrayList<>();
         TagName = tagName;
         TagAttribute = tagAttribute;
         TagData = tagData;
-
+        isSingleTag=issingletag;
     }
 
+    public boolean isSingleTag() {
+        return isSingleTag;
+    }
+
+    public void setisSingleTag(boolean singleTag) {
+        isSingleTag = singleTag;
+    }
 
     public void setParent(TagNode parent) {
         Parent = parent;
@@ -86,7 +97,7 @@ class TagNode
         return (TagName.equals(o.getTagName()));
     }
 
-    String toString (int tabnum)
+    public String toString (int tabnum)
     {
         if(TagName==null)
             return null;
@@ -149,7 +160,7 @@ public class Tree_cls {
 
 
 
-    void DFS(ArrayList<ArrayList<TagNode>> ans, ArrayList<TagNode> currentpath, TagNode root, TagNode find)
+    public void DFS(ArrayList<ArrayList<TagNode>> ans, ArrayList<TagNode> currentpath, TagNode root, TagNode find)
     {
         // DFS on the tree
         currentpath.add(root);
@@ -184,7 +195,7 @@ public class Tree_cls {
         if(consideredParent == null){
             System.out.println("there is no node with this name");
             return;}
-Scanner reader = new Scanner(System.in);
+        Scanner reader = new Scanner(System.in);
         System.out.print("Set Tag name :");
         String tagName = reader.nextLine();
         System.out.print("Set Tag attribute :");
@@ -194,6 +205,7 @@ Scanner reader = new Scanner(System.in);
         TagNode node  =  new TagNode();
 
         TagNode newNode = new TagNode(consideredParent, null , tagName,tagAtt,tagData);
+
         if(consideredParent.getChildren() == null)
         {
             ArrayList<TagNode> children = new ArrayList<>();

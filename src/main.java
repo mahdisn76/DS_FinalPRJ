@@ -9,7 +9,7 @@ public class main {
 
         Tree_cls MainTree = new Tree_cls();  // this is the main tree of program ... that all of html file is in it
 
-        StringSpliter.split(FileIO.read(false),MainTree.getRoot());
+        StringSplitter.split(FileIO.read(false),MainTree.getRoot());
 
         boolean repeat = true;
         System.out.println("\n***********************----WELCOME----***********************");
