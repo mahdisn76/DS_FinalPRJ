@@ -10,13 +10,13 @@ import java.util.ArrayList;
     and pass it to the Tree ...
 */
 
-public class StringSpliter {
+public class StringSplitter {
     public static void split(String str,TagNode parent)
     {
         str = str.trim();
         if(str.isEmpty())
             return ;
-        if(!str.contains("<"))
+        if(!str.contains("<"))  // set tag data ...
         {
             if(parent==null)
                 return;
@@ -30,22 +30,12 @@ public class StringSpliter {
 
         if(str.charAt(0)!='<') // for settig the tagdata
         {
-            if(str.contains("<"))
-            {
-                if(parent.getTagData()==null)
-                    parent.setTagData(str.substring(0, str.indexOf('<')));
-                else
-                    parent.setTagData(parent.getTagData() + (str.substring(0, str.indexOf('<'))));
-                str = str.substring(str.indexOf('<'));
-            }
+            if(parent.getTagData()==null)
+                parent.setTagData(str.substring(0, str.indexOf('<')));
             else
-            {
-                if(parent.getTagData()==null)
-                    parent.setTagData(str.substring(0));
-                else
-                    parent.setTagData(parent.getTagData() + (str.substring(0)));
-                str="";
-            }
+                parent.setTagData(parent.getTagData() + (str.substring(0, str.indexOf('<'))));
+
+            str = str.substring(str.indexOf('<'));
         }
         str = str.trim();
         if(str.isEmpty())
@@ -53,13 +43,42 @@ public class StringSpliter {
             return;
         }
 
+        // ---------------------------------------- to this line is only for tagdata
+
+        if(str.substring(0,1)=="</" )  //if it was a single tag --------------
+        {
+            int spaceindx = str.indexOf(" ");
+            int tagindx = str.indexOf(">");
+
+            String tgName;
+            String tgAtt;
+            if(spaceindx<tagindx && spaceindx!=-1) // has attributes
+            {
+                tgName = str.substring(2,spaceindx);
+                tgAtt = str.substring(spaceindx,tagindx);
+            }
+            else
+            {
+                tgName = str.substring(2,tagindx);
+                tgAtt="";
+            }
+
+
+            TagNode tg = new TagNode(parent,null,tgName,tgAtt,null,true);
+            str=str.substring(str.indexOf(">"));
+            split(str,parent);
+            return;
+        }
+
+        //---------------------------------------------------------------------
+
         int space_index=str.indexOf(" ");
         int tag_index=str.indexOf(">");
 
         if(tag_index==-1)
             return;
 
-        String tagname="",tagattributes="";
+        String tagname,tagattributes = null;
 
         if(tag_index<space_index || space_index==-1)
         {
@@ -71,7 +90,7 @@ public class StringSpliter {
             tagattributes = str.substring(space_index + 1, tag_index);
         }
 
-        if(str.indexOf("</"+tagname+">")==-1)
+        if(!str.contains("</"+tagname+">"))
             return;
 
         String txt_btw_tg = str.substring(str.indexOf(">")+1,str.indexOf("</"+tagname+">")); // text between tags
@@ -80,7 +99,7 @@ public class StringSpliter {
         tagname=tagname.trim();
         tagattributes=tagattributes.trim();
 
-        TagNode newtag = new TagNode(parent,null,tagname,tagattributes,null);
+        TagNode newtag = new TagNode(parent,null,tagname,tagattributes,null,false);
 
         if(parent.getChildren()==null)
             parent.setChildren(new ArrayList<>());
@@ -90,7 +109,7 @@ public class StringSpliter {
         if(!txt_btw_tg.isEmpty())
             split(txt_btw_tg,newtag);
 
-        if(str.indexOf("</"+tagname+">")==-1)
+        if(!str.contains("</"+tagname+">"))
             return;
 
         str = str.substring(str.indexOf("</"+tagname+">")+("</"+tagname+">").length());
@@ -99,10 +118,9 @@ public class StringSpliter {
         if(!str.isEmpty())
             split(str,parent);
 
-        return;
     }
 
-    public static void TestSpliter(String[] args) {
+    public static void TestSpliter() {
         String test =
                 "<html attribute is here>" +
                 "tag data is here" +
@@ -113,7 +131,8 @@ public class StringSpliter {
                 "another data can be here " +
                         "<h2></h2>"+
                 "</html>";
-        TagNode root = new TagNode(null,null,null,null,null);
-        split(test,root);
+
+        Tree_cls testtree = new Tree_cls();
+        split(test,testtree.getRoot());
     }
 }
