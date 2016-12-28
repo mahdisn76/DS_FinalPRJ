@@ -30,8 +30,8 @@
       <file leaf-file-name="Tree_cls.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Tree_cls.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="251" column="49" selection-start-line="251" selection-start-column="49" selection-end-line="251" selection-end-column="49" />
+            <state relative-caret-position="472">
+              <caret line="314" column="13" selection-start-line="314" selection-start-column="13" selection-end-line="314" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#TagNode#0;class#TagNode#0" expanded="false" />
@@ -125,8 +125,8 @@
       <file leaf-file-name="main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+            <state relative-caret-position="229">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -701,7 +701,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482861638157</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="if condition solved">
+      <created>1482925615838</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1482925615838</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -765,7 +772,8 @@
     <MESSAGE value="All of these functions implemented:&#10;Add Node&#10;Delete Node with its children&#10;Delete Node but keep its children&#10;Edit Node&#10;&#10;Also User_input deleted and its important function implemented in Tree_cls named &quot;findSameName&quot;" />
     <MESSAGE value="some of Delete Tag bugs fixed&#10;but it has one or two bugs&#10; maybe it's for Search Function" />
     <MESSAGE value="welcome message" />
-    <option name="LAST_COMMIT_MESSAGE" value="welcome message" />
+    <MESSAGE value="if condition solved" />
+    <option name="LAST_COMMIT_MESSAGE" value="if condition solved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1168,8 +1176,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+        <state relative-caret-position="229">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1178,8 +1186,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Tree_cls.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="251" column="49" selection-start-line="251" selection-start-column="49" selection-end-line="251" selection-end-column="49" />
+        <state relative-caret-position="472">
+          <caret line="314" column="13" selection-start-line="314" selection-start-column="13" selection-end-line="314" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#TagNode#0;class#TagNode#0" expanded="false" />

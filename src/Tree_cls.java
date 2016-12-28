@@ -182,7 +182,7 @@ public class Tree_cls {
         TagNode consideredParent = findSameNames(parentName);
         //consideredParent = findSameNames(parentName);
         if(consideredParent == null){
-            System.out.println("there is no node with this name");
+//            System.out.println("there is no node with this name");
             return;}
 Scanner reader = new Scanner(System.in);
         System.out.print("Set Tag name :");
@@ -202,6 +202,7 @@ Scanner reader = new Scanner(System.in);
         }
         else
         consideredParent.getChildren().add(newNode);
+        System.out.println("# Tag Added #");
 //        ArrayList<TagNode> children = consideredParent.getChildren();
 //        children.add(newNode);
 //        consideredParent.setChildren(children);
@@ -210,6 +211,7 @@ Scanner reader = new Scanner(System.in);
     void DeleteNode(TagNode node)  // delete a node and also delete it from
     {
         node.getParent().getChildren().remove(node);
+        System.out.println("# Tag Deleted #");
     }
 
     void DeleteTagWithChildren(String tag)
@@ -217,7 +219,7 @@ Scanner reader = new Scanner(System.in);
 
         TagNode considerNode = findSameNames(tag);
         if (considerNode == null){
-            System.out.println("there is no node with this name");
+//            System.out.println("there is no node with this name");
             return;
         }
         DeleteNode(considerNode);
@@ -228,7 +230,7 @@ Scanner reader = new Scanner(System.in);
 
         TagNode considerNode = findSameNames(tag);
         if (considerNode == null){
-            System.out.println("there is no node with this name");
+//            System.out.println("there is no node with this name");
             return;
         }
 
@@ -249,7 +251,7 @@ Scanner reader = new Scanner(System.in);
           TagNode consideredNode = findSameNames(TagName);
           //consideredNode = findSameNames(TagName);
           if (consideredNode == null){
-              System.out.println("there is no node with this name");
+//              System.out.println("there is no node with this name");
               return;
            }
          // TagNode myNode = consideredNode.get(consideredNode.size()-1);
@@ -271,6 +273,7 @@ Scanner reader = new Scanner(System.in);
           consideredNode.setTagAttribute(tagAtt);
           consideredNode.setTagData(tagData);
           consideredNode.setTagName(tagName);
+          System.out.println("# Tag Edited #");
     }
 
     public String ToString(TagNode root)
@@ -297,8 +300,19 @@ Scanner reader = new Scanner(System.in);
                 for (int j = 1; j < SameNameNodes.get(i).size(); j++)
                     System.out.print("->" + SameNameNodes.get(i).get(j).getTagName());
             }
-            System.out.println("\n");
+
+            System.out.println("\n0.Return to Menu\n");
             int x = reader.nextInt();
+            if(x==0)
+            {
+                System.out.println("Operation Failed");
+                return null;
+            }
+            while(x > SameNameNodes.size())
+            {
+                System.out.print("There are just " + (SameNameNodes.size()) +" Tags\n Enter right number: ");
+                x = reader.nextInt();
+            }
             myConsideredNode = SameNameNodes.get(x-1);
             //return myConsideredNode.get(myConsideredNode.size()-1);
             return SameNameNodes.get(x-1).get(SameNameNodes.get(x-1).size()-1);
@@ -309,7 +323,10 @@ Scanner reader = new Scanner(System.in);
             return SameNameNodes.get(0).get(SameNameNodes.get(0).size()-1);
         }
         else
+        {
+            System.out.println("there is no node with this name");
             return null;
+        }
 
     }
 
