@@ -290,7 +290,7 @@ Scanner reader = new Scanner(System.in);
         SameNameNodes = Search(node);
         Scanner reader = new Scanner(System.in);
 
-        if(SameNameNodes.size() > 2) {
+        if(SameNameNodes.size() >= 2) {
             System.out.println("There are some " + '<' + nodeName + '>' + "\nwhich one do you want???");
             for (int i = 0; i < SameNameNodes.size(); i++) {
                 System.out.print("\n"+ (i+1));
