@@ -202,9 +202,12 @@ public class Tree_cls {
         String tagAtt = reader.nextLine();
         System.out.print("Set Tag data :");
         String tagData = reader.nextLine();
+        System.out.println("Is it Single Tag?(true OR false)");
+        boolean signletag = reader.nextBoolean();
         TagNode node  =  new TagNode();
 
-        TagNode newNode = new TagNode(consideredParent, null , tagName,tagAtt,tagData);
+
+        TagNode newNode = new TagNode(consideredParent, null , tagName,tagAtt,tagData,signletag);
 
         if(consideredParent.getChildren() == null)
         {
@@ -297,7 +300,7 @@ public class Tree_cls {
 
     TagNode findSameNames(String nodeName)
     {
-        TagNode node = new TagNode(null,null,nodeName,null,null);
+        TagNode node = new TagNode(null,null,nodeName,null,null,false);
 
         ArrayList<ArrayList<TagNode>> SameNameNodes;
         ArrayList<TagNode> myConsideredNode;
