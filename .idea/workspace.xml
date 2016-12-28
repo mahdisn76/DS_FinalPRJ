@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="092f88bd-208e-4e8a-8954-89a6807181db" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Tree_cls.java" afterPath="$PROJECT_DIR$/src/Tree_cls.java" />
     </list>
     <ignored path="DS_FinalProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -708,7 +707,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482925615838</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="some features added">
+      <created>1482927796012</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1482927796013</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -773,7 +779,8 @@
     <MESSAGE value="some of Delete Tag bugs fixed&#10;but it has one or two bugs&#10; maybe it's for Search Function" />
     <MESSAGE value="welcome message" />
     <MESSAGE value="if condition solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="if condition solved" />
+    <MESSAGE value="some features added" />
+    <option name="LAST_COMMIT_MESSAGE" value="some features added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
