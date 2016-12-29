@@ -24,6 +24,11 @@ while(repeat) {
         case 1:
             System.out.print("Enter Parent Tag Name: ");
             String parentname = reader.next();
+            if(parentname.equals("br"))
+            {
+                System.out.println("\"br\" can'r set parent ");
+                break;
+            }
             MainTree.AddNode(parentname);
             break;
 
