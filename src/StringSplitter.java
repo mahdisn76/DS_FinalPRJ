@@ -26,21 +26,20 @@ public class StringSplitter {
                 if(parent.getTagData()==null)
                     parent.setTagData(str);
                 else
-                    parent.setTagData(parent.getTagData()+str);
+                    parent.setTagData((parent.getTagData()+str).trim());
             return;
         }
 
         if(str.charAt(0)!='<') // for settig the tagdata
         {
             if(parent.getTagData()==null)
-                parent.setTagData(str.substring(0, str.indexOf('<')));
+                parent.setTagData((str.substring(0, str.indexOf('<'))).trim());
             else
-                parent.setTagData(parent.getTagData() + (str.substring(0, str.indexOf('<'))));
+                parent.setTagData(parent.getTagData() + (str.substring(0, str.indexOf('<')).trim()));
 
-            str = str.substring(str.indexOf('<'));
+            str = str.substring(str.indexOf('<')).trim();
         }
 
-        str = str.trim();
         if(str.isEmpty())
         {
             return;
@@ -74,7 +73,7 @@ public class StringSplitter {
 
 
         if(att==true)  //has attributes
-            tg = new TagNode(parent,null,str.substring(1,spcindx).trim(),str.substring(spcindx,tagindx-1).trim(),null,isSingle);
+            tg = new TagNode(parent,null,str.substring(1,spcindx).trim(),str.substring(spcindx,tagindx).trim(),null,isSingle);
         else
             tg = new TagNode(parent,null,str.substring(1,tagindx).trim(),null,null,isSingle);
 
@@ -134,7 +133,7 @@ public class StringSplitter {
     }
 
 
-    public static void Test(String[] args) {
+    public static void main(String[] args) {
 
         Tree_cls MainTree = new Tree_cls();  // this is the main tree of program ... that all of html file is in it
         System.out.println("\n***********************----WELCOME----***********************");
@@ -148,7 +147,7 @@ public class StringSplitter {
                 "\n" +
                 "\n" +
                 "    <body>\n" +
-                "        <header style=\"background-color:palegoldenrod;height:50px ; margin:5px 5px 5px 5px ; text-align:center ;color:red\"  >  MSN WebSite </header>\n" +
+                "        <header style=\"background-color:palegoldenrod;height:50px ; margin:5px 5px 5px 5px ; text-align:center ;color:red\">  MSN WebSite </header>\n" +
                 "        <br />\n" +
                 "        <footer style=\"background-color:lightblue\">\n" +
                 "            <ul style=\"\">\n" +
@@ -273,7 +272,69 @@ public class StringSplitter {
                 "\n" +
                 "            </ul>";
 
-        StringSplitter.split(str,MainTree.getRoot());
+
+        String str4="<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "<div>\n" +
+                "    <h2>\n" +
+                "        h2\n" +
+                "    </h2>\n" +
+                "    <h3>h3</h3>\n" +
+                "\n" +
+                "\n" +
+                "</div>\n" +
+                "<h1  align=\"center\">WELCOME TO WEB PAGE</h1>\n" +
+                "\n" +
+                "<h4 style=\"color: red \">\n" +
+                "    i'm alireza parchami and i'm going to university of isfahan\n" +
+                "</h4>\n" +
+                "\n" +
+                "<table border=\"2\" style=\"font-size: 30px;width: 24%\"\">\n" +
+                "    <tr>\n" +
+                "        <td>\n" +
+                "            This program is safe.\n" +
+                "        </td>\n" +
+                "    </tr>\n" +
+                "</table>\n" +
+                "\n" +
+                "<br/>\n" +
+                "\n" +
+                "<table border=\"5\" style=\"background-color: antiquewhite ; height:250px;width:500px;margin-left: auto;margin-right: auto \">\n" +
+                "    <tr>\n" +
+                "        <td >\n" +
+                "            <h1 align=\"center\">Hi Master</h1>\n" +
+                "        </td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td>\n" +
+                "            <h4 align=\"center\" >\n" +
+                "                I'm Glad\n" +
+                "            </h4>\n" +
+                "        </td>\n" +
+                "    </tr>\n" +
+                "</table>\n" +
+                "<p align=\"center\">\n" +
+                "    asmdf asfja;sodjfas fa;sjf ;aisjdf ;asijf;asif;askmf;klasmf;anguinbnrtbprn bpunr bunptbnsprutbnspr tbns;rbn;srbn;srtbn\n" +
+                "    <br>\n" +
+                "    adfga;lng;a ; ;g ;oag;oang;oagn; oaeng; onmag; onm;o; oa;go ne;og n; ga;ugn iaebgiaebg\n" +
+                "    <br>\n" +
+                "    amnwofmaofmarnf;aenmrg\n" +
+                "    <br>\n" +
+                "    mwef'ammf'iaejgjgjnv,bxbj-goa-rio53\n" +
+                "\n" +
+                "\n" +
+                "</p>\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        StringSplitter.split(str4,MainTree.getRoot());
 
         System.out.println(MainTree.getRoot().getChildren().get(0).toString(0));
 
