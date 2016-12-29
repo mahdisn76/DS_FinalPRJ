@@ -71,11 +71,16 @@ public class StringSplitter {
         else
             att=false;
 
+        int x=0;   //if it is a single tag -> attribute must be a character less
+        if(isSingle)
+            x=1;
+
 
         if(att==true)  //has attributes
-            tg = new TagNode(parent,null,str.substring(1,spcindx).trim(),str.substring(spcindx,tagindx).trim(),null,isSingle);
+            tg = new TagNode(parent,null,str.substring(1,spcindx).trim(),str.substring(spcindx,tagindx-x).trim(),null,isSingle);
         else
             tg = new TagNode(parent,null,str.substring(1,tagindx).trim(),null,null,isSingle);
+
 
         if(parent.getChildren()==null)
             parent.setChildren(new ArrayList<>());
@@ -86,10 +91,11 @@ public class StringSplitter {
             str=str.substring(str.indexOf(">")+1).trim();
             split(str,parent);
             return;
-            /* this tag removed from str
+            /*
+                this tag removed from str
                 and
                 split will call for new str ...
-                ans after that return
+                and after that return
              */
         }
 

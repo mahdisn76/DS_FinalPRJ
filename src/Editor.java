@@ -56,7 +56,7 @@ public class Editor extends JFrame {
         // Other components
         JPanel pnlMain = new JPanel(new GridLayout(1, 2));
         txtHTML = new JTextArea();
-        txtHTML.setTabSize(2);
+        txtHTML.setTabSize(4);
         txtHTML.setFont(new Font("Courier new", Font.PLAIN, 15));
         pnlMain.add(new JScrollPane(txtHTML));
         pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -84,26 +84,24 @@ public class Editor extends JFrame {
         });
 
         btnEdit.addActionListener((ActionEvent e) -> {
-            tree.EditNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+            tree.EditNode(JOptionPane.showInputDialog(this, "Enter tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
             updateTreeView(pnlMain);
         });
 
         btnDelete.addActionListener((ActionEvent e) -> {
-            tree.DeleteTagKeepChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+            tree.DeleteTagKeepChildren(JOptionPane.showInputDialog(this, "Enter tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
             updateTreeView(pnlMain);
         });
 
         btnDeleteSubtree.addActionListener((ActionEvent e) -> {
-            tree.DeleteTagWithChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+            tree.DeleteTagWithChildren(JOptionPane.showInputDialog(this, "Enter tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
             updateTreeView(pnlMain);
         });
 
         btnUpdateTree.addActionListener((ActionEvent e) -> {
             tree = new Tree_cls();
-            File f = new File("temp.txt");
-            FileIO.write(f, txtHTML.getText());
-            String tempText = FileIO.read(f, false);
-            StringSplitter.split(tempText, tree.getRoot());
+            StringSplitter.split(txtHTML.getText(), tree.getRoot());
+            txtHTML.setText(tree.toString());
             updateTreeView(pnlMain);
         });
 
