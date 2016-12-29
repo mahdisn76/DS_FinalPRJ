@@ -32,6 +32,7 @@ public class Editor extends JFrame {
         JButton btnEdit = new JButton("Edit");
         JButton btnDelete = new JButton("Delete");
         JButton btnDeleteSubtree = new JButton("Delete subtree");
+        JButton btnUpdateTree = new JButton("Update tree");
         JButton btnSave = new JButton("Save");
         JButton btnView = new JButton("View HTML");
         JComboBox<Integer> cmbxFontSize = new JComboBox<>();
@@ -44,6 +45,7 @@ public class Editor extends JFrame {
         pnlTop.add(btnEdit);
         pnlTop.add(btnDelete);
         pnlTop.add(btnDeleteSubtree);
+        pnlTop.add(btnUpdateTree);
         pnlTop.add(btnSave);
         pnlTop.add(btnView);
         pnlTop.add(cmbxFontSize);
@@ -91,6 +93,15 @@ public class Editor extends JFrame {
 
         btnDeleteSubtree.addActionListener((ActionEvent e) -> {
             tree.DeleteTagWithChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+            updateTreeView(pnlMain);
+        });
+
+        btnUpdateTree.addActionListener((ActionEvent e) -> {
+            tree = new Tree_cls();
+            File f = new File("temp.txt");
+            FileIO.write(f, txtHTML.getText());
+            String tempText = FileIO.read(f, false);
+            StringSplitter.split(tempText, tree.getRoot());
             updateTreeView(pnlMain);
         });
 
