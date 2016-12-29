@@ -1,7 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +9,8 @@ public class Editor extends JFrame {
 
     private Tree_cls tree;
     private JTree treeView;
+    private JTextArea txtHTML;
+    private JScrollPane treeScrollPane;
 
     public static void main(String[] args) {
         (new Editor()).showWindow();
@@ -51,7 +51,7 @@ public class Editor extends JFrame {
 
         // Other components
         JPanel pnlMain = new JPanel(new GridLayout(1, 2));
-        JTextArea txtHTML = new JTextArea();
+        txtHTML = new JTextArea();
         txtHTML.setTabSize(2);
         txtHTML.setFont(new Font("Courier new", Font.PLAIN, 15));
         pnlMain.add(new JScrollPane(txtHTML));
@@ -60,36 +60,38 @@ public class Editor extends JFrame {
         //TreeView
         treeView = tree.getComponent();
         treeView.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        pnlMain.add(new JScrollPane(treeView));
+        treeView.setFont(new Font("Courier new", Font.PLAIN, 15));
+        treeScrollPane = new JScrollPane(treeView);
+        pnlMain.add(treeScrollPane);
 
         getContentPane().add(pnlMain, BorderLayout.CENTER);
 
         // Set ActionListeners
         btnOpen.addActionListener((ActionEvent e) -> {
             File file = FileIO.getFile();
+            tree = new Tree_cls();
             StringSplitter.split(FileIO.read(file, false), tree.getRoot());
-            txtHTML.setText(FileIO.read(file, true));
-            updateTreeView();
+            updateTreeView(pnlMain);
         });
 
         btnAdd.addActionListener((ActionEvent e) -> {
             tree.AddNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView();
+            updateTreeView(pnlMain);
         });
 
         btnEdit.addActionListener((ActionEvent e) -> {
             tree.EditNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView();
+            updateTreeView(pnlMain);
         });
 
         btnDelete.addActionListener((ActionEvent e) -> {
             tree.DeleteTagKeepChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView();
+            updateTreeView(pnlMain);
         });
 
         btnDeleteSubtree.addActionListener((ActionEvent e) -> {
             tree.DeleteTagWithChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView();
+            updateTreeView(pnlMain);
         });
 
         btnSave.addActionListener((ActionEvent e) -> {
@@ -100,6 +102,7 @@ public class Editor extends JFrame {
 
         cmbxFontSize.addActionListener((ActionEvent e) -> {
             txtHTML.setFont(new Font("Courier new", Font.PLAIN, cmbxFontSize.getItemAt(cmbxFontSize.getSelectedIndex())));
+            treeView.setFont(new Font("Courier new", Font.PLAIN, cmbxFontSize.getItemAt(cmbxFontSize.getSelectedIndex())));
         });
 
     }
@@ -109,11 +112,14 @@ public class Editor extends JFrame {
         setVisible(true);
     }
 
-    private void updateTreeView() {
+    private void updateTreeView(JPanel parent) {
+        parent.remove(treeScrollPane);
         treeView = tree.getComponent();
-        DefaultTreeModel model = (DefaultTreeModel) treeView.getModel();
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
-        model.reload(root);
+        treeScrollPane = new JScrollPane(treeView);
+        parent.add(treeScrollPane);
+        if (tree.getRoot().getChildren() != null || tree.getRoot().getChildren().get(0) != null)
+            txtHTML.setText(tree.getRoot().getChildren().get(0).toString(0));
+        parent.revalidate();
     }
 
 }
