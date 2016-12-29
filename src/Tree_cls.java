@@ -250,7 +250,6 @@ public class Tree_cls {
         if (considerNode == null)
             return;
 
-
         if(considerNode.getChildren() !=null)
         {
             ArrayList<TagNode> parentChildren = considerNode.getParent().getChildren();
