@@ -3,7 +3,7 @@ import java.io.*;
 
 public final class FileIO {
 
-    public static File getFile(){
+    public static File getFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         if (fileChooser.showOpenDialog(null) == JFileChooser.CANCEL_OPTION)
@@ -12,8 +12,34 @@ public final class FileIO {
             return fileChooser.getSelectedFile();
     }
 
-    public static String read(boolean newLine){
+    public static String read(boolean newLine) {
         return read(getFile(), newLine);
+    }
+
+    public static void write(String text){
+        write(getFile(), text);
+    }
+
+    public static void write(File file, String text) {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            String[] lines = text.split("\n");
+            for (String line : lines) {
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while saving file", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } finally {
+            if (writer != null)
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
     }
 
     public static String read(File file, boolean newLine) {
@@ -42,33 +68,6 @@ public final class FileIO {
             }
         }
         return text;
-    }
-
-    public static void write(String text) {
-        BufferedWriter writer = null;
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if (fileChooser.showSaveDialog(null) != JFileChooser.CANCEL_OPTION) {
-            try {
-                File file = fileChooser.getSelectedFile();
-                writer = new BufferedWriter(new FileWriter(file));
-                String[] lines = text.split("\n");
-                for (String line : lines) {
-                    writer.write(line);
-                    writer.newLine();
-                }
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error while saving file", "Error", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-            } finally {
-                if (writer != null)
-                    try {
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-            }
-        }
     }
 
 }
