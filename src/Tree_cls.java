@@ -109,6 +109,13 @@ class TagNode
         ans+="<"+TagName;
         if(TagAttribute!=null)
             ans+=" " + TagAttribute;
+
+        if(isSingleTag==true)
+        {
+            ans+=" />";
+            return ans;
+        }
+
         ans+=">\n";
 
         if(TagData!=null)
