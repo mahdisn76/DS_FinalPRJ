@@ -212,9 +212,7 @@ public class Tree_cls {
         } else
             consideredParent.getChildren().add(newNode);
         System.out.println("# Tag Added #");
-//        ArrayList<TagNode> children = consideredParent.getChildren();
-//        children.add(newNode);
-//        consideredParent.setChildren(children);
+
     }
 
     void DeleteNode(TagNode node)  // delete a node and also delete it from
@@ -224,11 +222,6 @@ public class Tree_cls {
     }
 
     void DeleteTagWithChildren(String tag) {
-
-//        System.out.print("Is it Single tag ? (true or false) :");
-//        Scanner reader = new Scanner(System.in);
-//
-//        boolean isSingleTag  = reader.nextBoolean();
         TagNode considerNode = findSameNames(tag);
 
         if (considerNode == null)
@@ -268,12 +261,9 @@ public class Tree_cls {
 
 
         TagNode consideredNode = findSameNames(TagName);
-        //consideredNode = findSameNames(TagName);
-        if (consideredNode == null) {
-
-//              System.out.println("there is no node with this name");
+        if (consideredNode == null)
             return;
-        }
+
         // TagNode myNode = consideredNode.get(consideredNode.size()-1);
 
         System.out.println("----------Node Name,Attribute,Data---------");
@@ -319,7 +309,7 @@ public class Tree_cls {
 
 
         ArrayList<ArrayList<TagNode>> SameNameNodes;
-        ArrayList<TagNode> myConsideredNode;
+
 
         SameNameNodes = Search(node);
         Scanner reader = new Scanner(System.in);
@@ -342,11 +332,10 @@ public class Tree_cls {
                 System.out.print("There are just " + (SameNameNodes.size()) + " Tags\n Enter right number: ");
                 x = reader.nextInt();
             }
-            myConsideredNode = SameNameNodes.get(x - 1);
-            //return myConsideredNode.get(myConsideredNode.size()-1);
+
             return SameNameNodes.get(x - 1).get(SameNameNodes.get(x - 1).size() - 1);
         } else if (SameNameNodes.size() == 1) {
-            //return SameNameNodes.get(0).get();
+
             return SameNameNodes.get(0).get(SameNameNodes.get(0).size() - 1);
         } else {
             System.out.println("there is no node with this name");
