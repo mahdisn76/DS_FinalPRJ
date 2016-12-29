@@ -205,9 +205,12 @@ public class Tree_cls {
         String tagAtt = reader.nextLine();
         System.out.print("Set Tag data :");
         String tagData = reader.nextLine();
-        System.out.println("Is it Single Tag?(true OR false)");
+        System.out.print("Is it Single Tag?(true OR false) :");
         boolean signletag = reader.nextBoolean();
-        TagNode node = new TagNode();
+
+
+       // TagNode node  =  new TagNode();
+
 
 
         TagNode newNode = new TagNode(consideredParent, null, tagName, tagAtt, tagData, signletag);
@@ -219,9 +222,7 @@ public class Tree_cls {
         } else
             consideredParent.getChildren().add(newNode);
         System.out.println("# Tag Added #");
-//        ArrayList<TagNode> children = consideredParent.getChildren();
-//        children.add(newNode);
-//        consideredParent.setChildren(children);
+
     }
 
     void DeleteNode(TagNode node)  // delete a node and also delete it from
@@ -231,31 +232,35 @@ public class Tree_cls {
     }
 
     void DeleteTagWithChildren(String tag) {
-
         TagNode considerNode = findSameNames(tag);
-        if (considerNode == null) {
-//            System.out.println("there is no node with this name");
+
+        if (considerNode == null)
             return;
-        }
         DeleteNode(considerNode);
 
     }
 
-    void DeleteTagKeepChildren(String tag) {
-
+    void DeleteTagKeepChildren(String tag)
+    {
+    if(tag == "br")
+    {
+        System.out.println("this tag does't have any children");
+        return;
+    }
         TagNode considerNode = findSameNames(tag);
-        if (considerNode == null) {
-//            System.out.println("there is no node with this name");
+        if (considerNode == null)
             return;
-        }
 
-        if (considerNode.getChildren() != null) {
+
+        if(considerNode.getChildren() !=null)
+        {
             ArrayList<TagNode> parentChildren = considerNode.getParent().getChildren();
 
 //            for(TagNode n:considerNode.getChildren())
 //            parentChildren.add(n);
             for (int i = 0; i < considerNode.getChildren().size(); i++)
                 parentChildren.add(considerNode.getChildren().get(i));
+
             considerNode.getParent().setChildren(parentChildren);
         }
         DeleteNode(considerNode);
@@ -264,12 +269,11 @@ public class Tree_cls {
 
     void EditNode(String TagName) {
 
+
         TagNode consideredNode = findSameNames(TagName);
-        //consideredNode = findSameNames(TagName);
-        if (consideredNode == null) {
-//              System.out.println("there is no node with this name");
+        if (consideredNode == null)
             return;
-        }
+
         // TagNode myNode = consideredNode.get(consideredNode.size()-1);
 
         System.out.println("----------Node Name,Attribute,Data---------");
@@ -284,12 +288,17 @@ public class Tree_cls {
         String tagAtt = reader.nextLine();
         System.out.print("Enter new tagData: ");
         String tagData = reader.nextLine();
-        //--------------------------------------- Get  new name,attribute,data
+          System.out.print("Is it Single Tag?(true OR false) :");
+          boolean singleTag = reader.nextBoolean();
+        //--------------------------------------- Get  new name,attribute,data,isSingleTag
 
-        consideredNode.setTagAttribute(tagAtt);
-        consideredNode.setTagData(tagData);
-        consideredNode.setTagName(tagName);
-        System.out.println("# Tag Edited #");
+
+          consideredNode.setTagAttribute(tagAtt);
+          consideredNode.setTagData(tagData);
+          consideredNode.setTagName(tagName);
+          consideredNode.setisSingleTag(singleTag);
+          System.out.println("# Tag Edited #");
+
     }
 
     public String toString(TagNode root) {
@@ -298,11 +307,19 @@ public class Tree_cls {
         return root.toString(0);
     }
 
-    TagNode findSameNames(String nodeName) {
-        TagNode node = new TagNode(null, null, nodeName, null, null, false);
+    TagNode findSameNames(String nodeName )   //when we have a twin tag
+    {
+     TagNode node =  findSameNames(nodeName , false);
+        return node;
+    }
+
+    TagNode findSameNames(String nodeName , boolean isSingleTag)    // it will use directly when we have single tag
+    {
+        TagNode node = new TagNode(null,null,nodeName,null,null,false);
+
 
         ArrayList<ArrayList<TagNode>> SameNameNodes;
-        ArrayList<TagNode> myConsideredNode;
+
 
         SameNameNodes = Search(node);
         Scanner reader = new Scanner(System.in);
@@ -325,11 +342,10 @@ public class Tree_cls {
                 System.out.print("There are just " + (SameNameNodes.size()) + " Tags\n Enter right number: ");
                 x = reader.nextInt();
             }
-            myConsideredNode = SameNameNodes.get(x - 1);
-            //return myConsideredNode.get(myConsideredNode.size()-1);
+
             return SameNameNodes.get(x - 1).get(SameNameNodes.get(x - 1).size() - 1);
         } else if (SameNameNodes.size() == 1) {
-            //return SameNameNodes.get(0).get();
+
             return SameNameNodes.get(0).get(SameNameNodes.get(0).size() - 1);
         } else {
             System.out.println("there is no node with this name");
