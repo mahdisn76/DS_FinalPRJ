@@ -3,14 +3,24 @@ import java.io.*;
 
 public final class FileIO {
 
-    public static String read(boolean newLine) {
-        String text = "";
-        BufferedReader reader = null;
+    public static File getFile(){
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if (fileChooser.showOpenDialog(null) != JFileChooser.CANCEL_OPTION) {
+        if (fileChooser.showOpenDialog(null) == JFileChooser.CANCEL_OPTION)
+            return null;
+        else
+            return fileChooser.getSelectedFile();
+    }
+
+    public static String read(boolean newLine){
+        return read(getFile(), newLine);
+    }
+
+    public static String read(File file, boolean newLine) {
+        String text = "";
+        BufferedReader reader = null;
+        if (file != null) {
             try {
-                File file = fileChooser.getSelectedFile();
                 reader = new BufferedReader(new FileReader(file.getPath()));
                 StringBuilder sBuilder = new StringBuilder();
                 String line;

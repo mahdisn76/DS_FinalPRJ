@@ -1,4 +1,5 @@
-import java.awt.*;
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,6 +20,7 @@ class TagNode {
     private String TagAttribute;
     private String TagData;
     private boolean isSingleTag;
+    private DefaultMutableTreeNode component;
 
     public TagNode() {
         Parent = null;
@@ -27,17 +29,19 @@ class TagNode {
         TagAttribute = null;
         TagData = null;
         isSingleTag = false;
+        component = new DefaultMutableTreeNode(getTagName());
     }
 
     public TagNode(TagNode parent, ArrayList<TagNode> children, String tagName, String tagAttribute, String tagData, boolean issingletag) {
         Parent = parent;
         Children = children;
         if (children == null)
-            children = new ArrayList<>();
+            this.Children = new ArrayList<>();
         TagName = tagName;
         TagAttribute = tagAttribute;
         TagData = tagData;
         isSingleTag = issingletag;
+        component = new DefaultMutableTreeNode(getTagName());
     }
 
     public boolean isSingleTag() {
@@ -130,6 +134,12 @@ class TagNode {
         ans += "</" + TagName + ">";
         return ans;
     }
+
+    // Object for adding TreeNode to JTree
+    DefaultMutableTreeNode getComponent() {
+        return component;
+    }
+
 }
 
 public class Tree_cls {
@@ -330,9 +340,18 @@ public class Tree_cls {
 
     // Method for drawing the tree on a canvas (Graphics g)
     // By Parham
-    public void draw(Graphics g) {
-
+    public JTree getComponent() {
+        DefaultMutableTreeNode root = this.getRoot().getComponent();
+        JTree tree = new JTree(root);
+        BFS(this.root, root);
+        return tree;
     }
 
+    private void BFS(TagNode v, DefaultMutableTreeNode root) {
+        for (TagNode child : v.getChildren())
+            root.add(child.getComponent());
+        for (TagNode child : v.getChildren())
+            BFS(child, child.getComponent());
+    }
 
 }
