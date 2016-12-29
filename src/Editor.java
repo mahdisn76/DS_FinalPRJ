@@ -3,6 +3,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 public class Editor extends JFrame {
@@ -116,6 +118,30 @@ public class Editor extends JFrame {
             treeView.setFont(new Font("Courier new", Font.PLAIN, cmbxFontSize.getItemAt(cmbxFontSize.getSelectedIndex())));
         });
 
+        txtHTML.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    tree = new Tree_cls();
+                    File f = new File("temp.txt");
+                    FileIO.write(f, txtHTML.getText());
+                    String tempText = FileIO.read(f, false);
+                    StringSplitter.split(tempText, tree.getRoot());
+                    updateTreeView(pnlMain, false);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
     }
 
     private void showWindow() {
@@ -124,11 +150,15 @@ public class Editor extends JFrame {
     }
 
     private void updateTreeView(JPanel parent) {
+        updateTreeView(parent, true);
+    }
+
+    private void updateTreeView(JPanel parent, boolean updateText) {
         parent.remove(treeScrollPane);
         treeView = tree.getComponent();
         treeScrollPane = new JScrollPane(treeView);
         parent.add(treeScrollPane);
-        if (tree.getRoot().getChildren() != null || tree.getRoot().getChildren().get(0) != null)
+        if (updateText && (tree.getRoot().getChildren() != null || tree.getRoot().getChildren().get(0) != null))
             txtHTML.setText(tree.getRoot().getChildren().get(0).toString(0));
         parent.revalidate();
     }

@@ -359,7 +359,18 @@ public class Tree_cls {
         DefaultMutableTreeNode root = this.getRoot().getComponent();
         JTree tree = new JTree(root);
         BFS(this.root, root);
+        expandAllNodes(tree, 0, tree.getRowCount());
         return tree;
+    }
+
+    private void expandAllNodes(JTree tree, int startingIndex, int rowCount){
+        for(int i=startingIndex;i<rowCount;++i){
+            tree.expandRow(i);
+        }
+
+        if(tree.getRowCount()!=rowCount){
+            expandAllNodes(tree, rowCount, tree.getRowCount());
+        }
     }
 
     private void BFS(TagNode v, DefaultMutableTreeNode root) {
