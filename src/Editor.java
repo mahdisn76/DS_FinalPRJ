@@ -1,5 +1,3 @@
-import sun.security.krb5.internal.ccache.Tag;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.html.HTMLEditorKit;
@@ -119,14 +117,32 @@ public class Editor extends JFrame {
             }
 
 
-
-
-
             updateTreeView(true);
         });
 
         btnEdit.addActionListener((ActionEvent e) -> {
-            tree.EditNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+
+            // tree.EditNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+            TagNode node = new TagNode();
+            node.setTagName(JOptionPane.showInputDialog(this, "Enter tag name:", "Edit tag", JOptionPane.QUESTION_MESSAGE) );
+
+            ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
+            paths = tree.Search(node);
+
+            PathTable table = new PathTable(paths);
+            table.setModal(true);
+            table.setVisible(true);
+
+            if(GlobalVariable.SelectedPath != -1)
+            {
+                node = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1);
+                EditNode ED = new EditNode(node);
+                ED.setModal(true);
+                ED.setVisible(true);
+
+                GlobalVariable.SelectedPath = -1;
+            }
+
             updateTreeView(true);
         });
 
