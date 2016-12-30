@@ -56,12 +56,15 @@ public class AddNodefrm extends JDialog {
         pnlr.add(doublerdb);
         pnlr.add(addbtn);
 
-        pnll.setBorder(new EmptyBorder(1, 1, 1, 1));
+        pnll.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pnlr.setBorder(new EmptyBorder(10,10,10,10));
+
 
         getContentPane().add(pnll, BorderLayout.WEST);
         getContentPane().add(pnlr, BorderLayout.CENTER);
 
-        setSize(200, 200);
+        setSize(400, 200);
+
 
         addbtn.addActionListener((ActionEvent e) -> {
 

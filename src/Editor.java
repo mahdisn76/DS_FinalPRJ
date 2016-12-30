@@ -106,7 +106,7 @@ public class Editor extends JFrame {
                 frm.setModal(true);
                 frm.setVisible(true);
 
-                if(GlobalVariable.tgData!=null)
+                if(GlobalVariable.tgName!=null)
                 {
                     TagNode newnode = new TagNode(parentnode,null,GlobalVariable.tgName,GlobalVariable.tgAtt,GlobalVariable.tgData,GlobalVariable.tgIsSingle);
                     tree.AddNode(parentnode,newnode);
