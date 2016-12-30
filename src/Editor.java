@@ -57,7 +57,7 @@ public class Editor extends JFrame {
         // Text Editor
         JPanel pnlMain = new JPanel(new GridLayout(1, 2));
         txtHTML = new JTextArea();
-        txtHTML.setTabSize(2);
+        txtHTML.setTabSize(4);
         txtHTML.setFont(new Font("Courier new", Font.PLAIN, 15));
         pnlMain.add(new JScrollPane(txtHTML));
         pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -109,10 +109,8 @@ public class Editor extends JFrame {
 
         btnUpdateTree.addActionListener((ActionEvent e) -> {
             tree = new Tree_cls();
-            File f = new File("temp.txt");
-            FileIO.write(f, txtHTML.getText());
-            String tempText = FileIO.read(f, false);
-            StringSplitter.split(tempText, tree.getRoot());
+            StringSplitter.split(txtHTML.getText(), tree.getRoot());
+            txtHTML.setText(tree.toString());
             updateTreeView(true);
         });
 
@@ -142,10 +140,7 @@ public class Editor extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 tree = new Tree_cls();
-                File f = new File("temp.txt");
-                FileIO.write(f, txtHTML.getText());
-                String tempText = FileIO.read(f, false);
-                StringSplitter.split(tempText, tree.getRoot());
+                StringSplitter.split(txtHTML.getText(), tree.getRoot());
                 updateTreeView(false);
             }
         });

@@ -106,10 +106,11 @@ class TagNode {
         }
         ans += "<" + TagName;
         if (TagAttribute != null)
-            ans += " " + TagAttribute;
+            ans += " " + TagAttribute.trim();
 
         if (isSingleTag == true) {
             ans += " />";
+            System.out.println(ans);
             return ans;
         }
 
