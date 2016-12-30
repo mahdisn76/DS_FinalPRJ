@@ -22,6 +22,7 @@ public class AddNodefrm extends JDialog {
     private ButtonGroup rdbGroup;
 
     AddNodefrm() {
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
 
         addbtn = new JButton("Add");
@@ -58,7 +59,7 @@ public class AddNodefrm extends JDialog {
         pnll.setBorder(new EmptyBorder(1, 1, 1, 1));
 
         getContentPane().add(pnll, BorderLayout.WEST);
-        getContentPane().add(pnlr, BorderLayout.EAST);
+        getContentPane().add(pnlr, BorderLayout.CENTER);
 
         setSize(200, 200);
 
@@ -66,7 +67,7 @@ public class AddNodefrm extends JDialog {
 
             if (nametxt.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "your tag must have name", "add new tag", JOptionPane.INFORMATION_MESSAGE);
-            } else if (singlerdb.isSelected() == false && doublerdb.isSelected() == false) {
+            } else if (!singlerdb.isSelected() && !doublerdb.isSelected()) {
                 JOptionPane.showMessageDialog(null, "your have to choose single or double", "add new tag", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 GlobalVariable.tgName = nametxt.getText();
@@ -83,6 +84,24 @@ public class AddNodefrm extends JDialog {
             GlobalVariable.tgAtt = null;
             GlobalVariable.tgData = null;
             setVisible(false);
+        });
+
+        singlerdb.addActionListener((ActionEvent e) -> {
+            if (singlerdb.isSelected()) {
+                datatxt.setText("");
+                datatxt.setEnabled(false);
+            } else {
+                datatxt.setEnabled(true);
+            }
+        });
+
+        doublerdb.addActionListener((ActionEvent e) -> {
+            if (singlerdb.isSelected()) {
+                datatxt.setText("");
+                datatxt.setEnabled(false);
+            } else {
+                datatxt.setEnabled(true);
+            }
         });
 
 

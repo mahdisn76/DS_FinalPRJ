@@ -1,17 +1,13 @@
 /**
  * Created by MSN on 12/30/2016.
  */
-import com.sun.org.apache.xpath.internal.SourceTree;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 
 public class PathTable extends JDialog{
@@ -23,6 +19,7 @@ public class PathTable extends JDialog{
 
     PathTable(ArrayList<ArrayList<TagNode>> paths)
     {
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         //headers for the table
         String[] columns = new String[] {
                 "Id", "Path"
