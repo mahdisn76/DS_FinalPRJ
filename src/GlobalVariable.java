@@ -3,4 +3,8 @@
  */
 public class GlobalVariable {
     public static int SelectedPath=-1;
+    public static String tgName = null;
+    public static String tgAtt  = null;
+    public static String tgData = null;
+    public static boolean tgIsSingle = false;
 }

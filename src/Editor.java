@@ -1,3 +1,5 @@
+import sun.security.krb5.internal.ccache.Tag;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.html.HTMLEditorKit;
@@ -7,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Editor extends JFrame {
 
@@ -88,7 +91,37 @@ public class Editor extends JFrame {
         });
 
         btnAdd.addActionListener((ActionEvent e) -> {
-            tree.AddNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+            TagNode parentnode = new TagNode();
+            parentnode.setTagName(JOptionPane.showInputDialog(this, "Enter parent tag name:", "add node", JOptionPane.QUESTION_MESSAGE));
+            ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
+            paths = tree.Search(parentnode);
+
+            PathTable pt = new PathTable(paths);
+            pt.setModal(true);
+            pt.setVisible(true);
+            if(GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
+            {
+                parentnode = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1);
+                AddNodefrm frm = new AddNodefrm();
+                frm.setModal(true);
+                frm.setVisible(true);
+
+                if(GlobalVariable.tgData!=null)
+                {
+                    TagNode newnode = new TagNode(parentnode,null,GlobalVariable.tgName,GlobalVariable.tgAtt,GlobalVariable.tgData,GlobalVariable.tgIsSingle);
+                    tree.AddNode(parentnode,newnode);
+
+                    GlobalVariable.tgData=null;
+                    GlobalVariable.tgAtt=null;
+                    GlobalVariable.tgName=null;
+                }
+                GlobalVariable.SelectedPath = -1;  // again set it to the default
+            }
+
+
+
+
+
             updateTreeView(true);
         });
 
@@ -97,14 +130,39 @@ public class Editor extends JFrame {
             updateTreeView(true);
         });
 
-        btnDelete.addActionListener((ActionEvent e) -> {
-            tree.DeleteTagKeepChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+        btnDelete.addActionListener((ActionEvent e) -> { //delete without deleting it's children
+            TagNode tg = new TagNode();
+            tg.setTagName(JOptionPane.showInputDialog(this, "Enter tag name:", "delete node", JOptionPane.QUESTION_MESSAGE));
+            ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
+            paths = tree.Search(tg);
+
+            PathTable pt = new PathTable(paths);
+            pt.setModal(true);
+            pt.setVisible(true);
+            tg = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1);
+            if(GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
+            {
+                tree.DeleteNodeKeepChildren(tg);
+                GlobalVariable.SelectedPath = -1;  // again set it to the default
+            }
             updateTreeView(true);
         });
 
         btnDeleteSubtree.addActionListener((ActionEvent e) -> {
-            tree.DeleteTagWithChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
+            TagNode tg = new TagNode();
+            tg.setTagName(JOptionPane.showInputDialog(this, "Enter tag name:", "delete sub tree", JOptionPane.QUESTION_MESSAGE));
+            ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
+            paths = tree.Search(tg);
+            PathTable pt = new PathTable(paths);
+            pt.setModal(true);
+            pt.setVisible(true);
+            if(GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
+            {
+                tree.DeleteNode(paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1));
+                GlobalVariable.SelectedPath = -1;  // again set it to the default
+            }
             updateTreeView(true);
+
         });
 
         btnRefresh.addActionListener((ActionEvent e) -> {

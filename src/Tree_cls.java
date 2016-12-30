@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -183,7 +184,7 @@ public class Tree_cls {
     }
 
 
-    // it must test
+    // it must Path_table
     ArrayList<ArrayList<TagNode>> Search(TagNode node)  //search a tag only by it's tag name and return all of them
     {
         ArrayList<ArrayList<TagNode>> finds = new ArrayList<>();
@@ -191,44 +192,25 @@ public class Tree_cls {
         return finds;
     }
 
-    void AddNode(String parentName) // add a new child to it's parent
+    void AddNode(TagNode parent , TagNode tg) // add a new child to it's parent
     {
-        TagNode consideredParent = findSameNames(parentName);
-        //consideredParent = findSameNames(parentName);
-        if (consideredParent == null) {
-            return;
-        }
-
-        TagNode newNode;
-
-        Scanner reader = new Scanner(System.in);
-        System.out.print("Set Tag name :");
-        String tagName = reader.nextLine();
-
-        if(!tagName.equals("br"))
-        {
-        System.out.print("Set Tag attribute :");
-        String tagAtt = reader.nextLine();
-        System.out.print("Set Tag data :");
-        String tagData = reader.nextLine();
-         newNode = new TagNode(consideredParent, null, tagName, tagAtt, tagData, false);}
-        else
-            newNode = new TagNode(consideredParent  , null , tagName , null , null , true);
-
-        if (consideredParent.getChildren() == null) {
-            ArrayList<TagNode> children = new ArrayList<>();
-            children.add(newNode);
-            consideredParent.setChildren(children);
-        } else
-            consideredParent.getChildren().add(newNode);
-        System.out.println("# Tag Added #");
-
+        parent.getChildren().add(tg);
+        tg.setParent(parent);
     }
 
     void DeleteNode(TagNode node)  // delete a node and also delete it from
     {
         node.getParent().getChildren().remove(node);
         System.out.println("# Tag Deleted #");
+    }
+
+    void DeleteNodeKeepChildren(TagNode tg)
+    {
+        for (TagNode ch :
+                tg.getChildren()) {
+            tg.getParent().getChildren().add(ch);
+        }
+        tg.getParent().getChildren().remove(tg);
     }
 
     void DeleteTagWithChildren(String tag) {
@@ -312,6 +294,20 @@ public class Tree_cls {
         return root.toString(0);
     }
 
+
+
+    TagNode FindTag(String nodeName)
+    {
+        TagNode node = new TagNode(null,null,nodeName,null,null,false);
+        ArrayList<ArrayList<TagNode>> paths;
+        paths = Search(node);
+
+        JPanel pnlMain = new JPanel(new GridLayout(1, 1));
+        JTable table = new JTable(paths.size(),1);
+        pnlMain.add(table);
+
+        return null;
+    }
 
     TagNode findSameNames(String nodeName)    // it will use directly when we have single tag
     {
