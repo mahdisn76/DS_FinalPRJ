@@ -37,7 +37,7 @@ public class Editor extends JFrame {
         JButton btnEdit = new JButton("Edit");
         JButton btnDelete = new JButton("Delete");
         JButton btnDeleteSubtree = new JButton("Delete subtree");
-        JButton btnUpdateTree = new JButton("Update tree");
+        JButton btnRefresh = new JButton("Refresh");
         JButton btnSave = new JButton("Save");
         JComboBox<Integer> cmbxFontSize = new JComboBox<>();
         for (int i = 12; i <= 32; i++)
@@ -49,7 +49,7 @@ public class Editor extends JFrame {
         pnlTop.add(btnEdit);
         pnlTop.add(btnDelete);
         pnlTop.add(btnDeleteSubtree);
-        pnlTop.add(btnUpdateTree);
+        pnlTop.add(btnRefresh);
         pnlTop.add(btnSave);
         pnlTop.add(cmbxFontSize);
         getContentPane().add(pnlTop, BorderLayout.NORTH);
@@ -107,10 +107,9 @@ public class Editor extends JFrame {
             updateTreeView(true);
         });
 
-        btnUpdateTree.addActionListener((ActionEvent e) -> {
+        btnRefresh.addActionListener((ActionEvent e) -> {
             tree = new Tree_cls();
             StringSplitter.split(txtHTML.getText(), tree.getRoot());
-            txtHTML.setText(tree.toString());
             updateTreeView(true);
         });
 
@@ -133,10 +132,9 @@ public class Editor extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                //if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-                //}
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
                 tree = new Tree_cls();
@@ -157,9 +155,9 @@ public class Editor extends JFrame {
         treeView = tree.getComponent();
         treeScrollPane = new JScrollPane(treeView);
         pnlMainRight.add(treeScrollPane);
-        htmlPageView.setText(txtHTML.getText());
         if (updateText && (tree.getRoot().getChildren() != null || tree.getRoot().getChildren().get(0) != null))
             txtHTML.setText(tree.getRoot().getChildren().get(0).toString(0));
+        htmlPageView.setText(txtHTML.getText());
         pnlMainRight.revalidate();
     }
 
