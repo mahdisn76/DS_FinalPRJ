@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,8 @@ public class Editor extends JFrame {
     private JTree treeView;
     private JTextArea txtHTML;
     private JScrollPane treeScrollPane;
+    private JPanel pnlMainRight;
+    private JEditorPane htmlPageView;
 
     public static void main(String[] args) {
         (new Editor()).showWindow();
@@ -36,7 +39,6 @@ public class Editor extends JFrame {
         JButton btnDeleteSubtree = new JButton("Delete subtree");
         JButton btnUpdateTree = new JButton("Update tree");
         JButton btnSave = new JButton("Save");
-        JButton btnView = new JButton("View HTML");
         JComboBox<Integer> cmbxFontSize = new JComboBox<>();
         for (int i = 12; i <= 32; i++)
             cmbxFontSize.addItem(i);
@@ -49,11 +51,10 @@ public class Editor extends JFrame {
         pnlTop.add(btnDeleteSubtree);
         pnlTop.add(btnUpdateTree);
         pnlTop.add(btnSave);
-        pnlTop.add(btnView);
         pnlTop.add(cmbxFontSize);
         getContentPane().add(pnlTop, BorderLayout.NORTH);
 
-        // Other components
+        // Text Editor
         JPanel pnlMain = new JPanel(new GridLayout(1, 2));
         txtHTML = new JTextArea();
         txtHTML.setTabSize(2);
@@ -61,41 +62,49 @@ public class Editor extends JFrame {
         pnlMain.add(new JScrollPane(txtHTML));
         pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        //TreeView
+        pnlMainRight = new JPanel(new GridLayout(2, 1));
+
+        // HTML Viewer
+        htmlPageView = new JEditorPane();
+        htmlPageView.setEditorKit(new HTMLEditorKit());
+        htmlPageView.setEditable(false);
+        pnlMainRight.add(new JScrollPane(htmlPageView));
+
+        // TreeView
         treeView = tree.getComponent();
         treeView.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         treeView.setFont(new Font("Courier new", Font.PLAIN, 15));
         treeScrollPane = new JScrollPane(treeView);
-        pnlMain.add(treeScrollPane);
+        pnlMainRight.add(treeScrollPane);
 
+        pnlMain.add(pnlMainRight);
         getContentPane().add(pnlMain, BorderLayout.CENTER);
-
         // Set ActionListeners
         btnOpen.addActionListener((ActionEvent e) -> {
             File file = FileIO.getFile();
             tree = new Tree_cls();
             StringSplitter.split(FileIO.read(file, false), tree.getRoot());
-            updateTreeView(pnlMain);
+            updateTreeView(true);
         });
 
         btnAdd.addActionListener((ActionEvent e) -> {
             tree.AddNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView(pnlMain);
+            updateTreeView(true);
         });
 
         btnEdit.addActionListener((ActionEvent e) -> {
             tree.EditNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView(pnlMain);
+            updateTreeView(true);
         });
 
         btnDelete.addActionListener((ActionEvent e) -> {
             tree.DeleteTagKeepChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView(pnlMain);
+            updateTreeView(true);
         });
 
         btnDeleteSubtree.addActionListener((ActionEvent e) -> {
             tree.DeleteTagWithChildren(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
-            updateTreeView(pnlMain);
+            updateTreeView(true);
         });
 
         btnUpdateTree.addActionListener((ActionEvent e) -> {
@@ -104,7 +113,7 @@ public class Editor extends JFrame {
             FileIO.write(f, txtHTML.getText());
             String tempText = FileIO.read(f, false);
             StringSplitter.split(tempText, tree.getRoot());
-            updateTreeView(pnlMain);
+            updateTreeView(true);
         });
 
         btnSave.addActionListener((ActionEvent e) -> {
@@ -126,19 +135,18 @@ public class Editor extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    tree = new Tree_cls();
-                    File f = new File("temp.txt");
-                    FileIO.write(f, txtHTML.getText());
-                    String tempText = FileIO.read(f, false);
-                    StringSplitter.split(tempText, tree.getRoot());
-                    updateTreeView(pnlMain, false);
-                }
-            }
+                //if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
+                //}
+            }
             @Override
             public void keyReleased(KeyEvent e) {
-
+                tree = new Tree_cls();
+                File f = new File("temp.txt");
+                FileIO.write(f, txtHTML.getText());
+                String tempText = FileIO.read(f, false);
+                StringSplitter.split(tempText, tree.getRoot());
+                updateTreeView(false);
             }
         });
 
@@ -149,18 +157,15 @@ public class Editor extends JFrame {
         setVisible(true);
     }
 
-    private void updateTreeView(JPanel parent) {
-        updateTreeView(parent, true);
-    }
-
-    private void updateTreeView(JPanel parent, boolean updateText) {
-        parent.remove(treeScrollPane);
+    private void updateTreeView(boolean updateText) {
+        pnlMainRight.remove(treeScrollPane);
         treeView = tree.getComponent();
         treeScrollPane = new JScrollPane(treeView);
-        parent.add(treeScrollPane);
+        pnlMainRight.add(treeScrollPane);
+        htmlPageView.setText(txtHTML.getText());
         if (updateText && (tree.getRoot().getChildren() != null || tree.getRoot().getChildren().get(0) != null))
             txtHTML.setText(tree.getRoot().getChildren().get(0).toString(0));
-        parent.revalidate();
+        pnlMainRight.revalidate();
     }
 
 }
