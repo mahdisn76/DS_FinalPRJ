@@ -7,4 +7,5 @@ public class GlobalVariable {
     public static String tgAtt  = null;
     public static String tgData = null;
     public static boolean tgIsSingle = false;
+    public static boolean autocmpleteflag=false;
 }

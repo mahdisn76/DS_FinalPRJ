@@ -200,6 +200,8 @@ public class Editor extends JFrame {
             treeView.setFont(new Font("Courier new", Font.PLAIN, cmbxFontSize.getItemAt(cmbxFontSize.getSelectedIndex())));
         });
 
+
+
         txtHTML.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -208,6 +210,29 @@ public class Editor extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
+                int tabnum=0,linenum=-1,end=-1;
+                if(e.getKeyCode()==KeyEvent.VK_PERIOD && e.isShiftDown()) // >
+                {
+                    int caretpos = txtHTML.getCaretPosition();
+                    try {
+                        linenum = txtHTML.getLineOfOffset(caretpos);
+                        end = caretpos - txtHTML.getLineStartOffset(linenum);
+                        linenum -= 1;
+                    }
+                    catch(Exception ex) { }
+                    String lines[]=txtHTML.getText().split("\\n");
+                    int start = lines[linenum+1].lastIndexOf("<")+1;
+                    int spaceindx=lines[linenum+1].lastIndexOf(" ");
+                    if(spaceindx>start && spaceindx<end)
+                        end=spaceindx;
+                    String tgName = lines[linenum+1].substring(start,end);
+                    if(!(tgName.charAt(0)=='/' || tgName.charAt(tgName.length()-1)=='/'))
+                    {
+                        txtHTML.insert("</"+tgName+">",caretpos);
+                        txtHTML.setCaretPosition(caretpos);
+                        GlobalVariable.autocmpleteflag=true;
+                    }
+                }
             }
 
 
@@ -218,11 +243,14 @@ public class Editor extends JFrame {
                 int tabnum=0;
 
                 int linenum=-1;
+                int caretpos=-1;
+
+
                 if(e.getKeyCode()==KeyEvent.VK_ENTER)
                 {
 
                     try {
-                        int caretpos = txtHTML.getCaretPosition();
+                        caretpos = txtHTML.getCaretPosition();
                         linenum = txtHTML.getLineOfOffset(caretpos);
                         int columnnum = caretpos - txtHTML.getLineStartOffset(linenum);
                         linenum -= 1;
@@ -236,11 +264,30 @@ public class Editor extends JFrame {
                         tabnum = (lines[linenum].length() - lines[linenum].trim().length() );
                     }
 
-                    for(int i=0;i<tabnum;i++)
-                        tabs+="\t";
-                    txtHTML.insert(tabs,txtHTML.getCaretPosition());
-                }
 
+
+                    if(GlobalVariable.autocmpleteflag)
+                    {
+                        //tabs+="\n";
+                        for (int i = 0; i < tabnum+1; i++) {
+                            tabs+="\t";
+                        }
+                        txtHTML.insert(tabs,txtHTML.getCaretPosition());
+                        txtHTML.setCaretPosition(txtHTML.getCaretPosition());
+                        tabs="\n";
+
+                        for(int i=0;i<tabnum;i++)
+                            tabs+="\t";
+                        txtHTML.insert(tabs,txtHTML.getCaretPosition());
+                        GlobalVariable.autocmpleteflag=false;
+                        txtHTML.setCaretPosition(txtHTML.getCaretPosition()-tabnum-1);
+                    }
+                    else {
+                        for(int i=0;i<tabnum;i++)
+                            tabs+="\t";
+                        txtHTML.insert(tabs, txtHTML.getCaretPosition());
+                    }
+                }
 
                 tree = new Tree_cls();
                 StringSplitter.split(txtHTML.getText(), tree.getRoot());
