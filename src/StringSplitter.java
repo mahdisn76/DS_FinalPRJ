@@ -79,7 +79,7 @@ public class StringSplitter {
         if(att==true)  //has attributes
             tg = new TagNode(parent,null,str.substring(1,spcindx).trim(),str.substring(spcindx,tagindx-x).trim(),null,isSingle);
         else
-            tg = new TagNode(parent,null,str.substring(1,tagindx).trim(),null,null,isSingle);
+            tg = new TagNode(parent,null,str.substring(1,tagindx-x).trim(),null,null,isSingle);
 
 
         if(parent.getChildren()==null)
@@ -307,7 +307,7 @@ public class StringSplitter {
                 "        <td>\n" +
                 "            This program is safe.\n" +
                 "        </td>\n" +
-                "    </tr>\n" +
+                "    </tr>tr\n" +
                 "</table>\n" +
                 "\n" +
                 "<br/>\n" +

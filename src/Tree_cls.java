@@ -98,19 +98,19 @@ class TagNode {
     }
 
     public String toString(int tabnum) {
-        if (TagName == null)
+        if (TagName.trim() == null)
             return null;
 
         String ans = "";
         for (int i = 0; i < tabnum; i++) {
             ans += "\t";
         }
-        ans += "<" + TagName;
+        ans += "<" + TagName.trim();
         if (TagAttribute != null)
             ans += " " + TagAttribute.trim();
 
         if (isSingleTag == true) {
-            ans += " />";
+            ans += "/>";
             System.out.println(ans);
             return ans;
         }
@@ -133,7 +133,7 @@ class TagNode {
         for (int i = 0; i < tabnum; i++) {
             ans += "\t";
         }
-        ans += "</" + TagName + ">";
+        ans += "</" + TagName.trim() + ">";
         return ans;
     }
 
