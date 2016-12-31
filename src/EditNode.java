@@ -39,7 +39,7 @@ public class EditNode extends JDialog{
 
         rdbGroup = new ButtonGroup();
         SingleTag = new JRadioButton("Single Tag" , false);
-        DoubleTag = new JRadioButton("Double Tag"  , false);
+        DoubleTag = new JRadioButton("Double Tag"  , true);
         rdbGroup.add(SingleTag);
         rdbGroup.add(DoubleTag);
 
@@ -68,7 +68,7 @@ public class EditNode extends JDialog{
 
                     if(nameTxt.getText().isEmpty())
                         JOptionPane.showMessageDialog(null , "Your Tag must have name " , "Edit tag Error" , JOptionPane.ERROR_MESSAGE);
-                    else if(SingleTag.isSelected()==false && !DoubleTag.isSelected() ==false)
+                    else if(SingleTag.isSelected()==false && DoubleTag.isSelected() ==false)
                         JOptionPane.showMessageDialog(null, "your have to choose single or double", "add new tag" , JOptionPane.INFORMATION_MESSAGE);
                     else
                     {
