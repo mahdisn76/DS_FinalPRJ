@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Utilities;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
@@ -206,11 +208,40 @@ public class Editor extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-
             }
+
+
 
             @Override
             public void keyReleased(KeyEvent e) {
+
+                int tabnum=0;
+
+                int linenum=-1;
+                if(e.getKeyCode()==KeyEvent.VK_ENTER)
+                {
+
+                    try {
+                        int caretpos = txtHTML.getCaretPosition();
+                        linenum = txtHTML.getLineOfOffset(caretpos);
+                        int columnnum = caretpos - txtHTML.getLineStartOffset(linenum);
+                        linenum -= 1;
+                    }
+                    catch(Exception ex) { }
+
+                    String tabs="";
+                    String lines[]=txtHTML.getText().split("\\n");
+                    if(linenum!=-1 && linenum>=0)
+                    {
+                        tabnum = (lines[linenum].length() - lines[linenum].trim().length() );
+                    }
+
+                    for(int i=0;i<tabnum;i++)
+                        tabs+="\t";
+                    txtHTML.insert(tabs,txtHTML.getCaretPosition());
+                }
+
+
                 tree = new Tree_cls();
                 StringSplitter.split(txtHTML.getText(), tree.getRoot());
                 updateTreeView(false);
