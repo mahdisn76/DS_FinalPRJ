@@ -1,7 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Utilities;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
@@ -34,8 +32,48 @@ public class Editor extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.jpg")));
         getContentPane().setLayout(new BorderLayout());
 
+        // Menu
+        JMenuBar menuBar = new JMenuBar();
+        JMenu mnFile = new JMenu("File");
+        mnFile.setMnemonic(KeyEvent.VK_F);
+        JMenuItem mnFileNew = new JMenuItem("New");
+        mnFile.add(mnFileNew);
+        JMenuItem mnFileOpen = new JMenuItem("Open");
+        mnFile.add(mnFileOpen);
+        mnFile.addSeparator();
+        JMenuItem mnFileSave = new JMenuItem("Save");
+        mnFile.add(mnFileSave);
+        mnFile.addSeparator();
+        JMenuItem mnFileExit = new JMenuItem("Exit");
+        mnFile.add(mnFileExit);
+        menuBar.add(mnFile);
+
+        JMenu mnEdit = new JMenu("Edit");
+        mnEdit.setMnemonic(KeyEvent.VK_E);
+        JMenuItem mnEditAdd = new JMenuItem("Add tag");
+        mnEdit.add(mnEditAdd);
+        JMenuItem mnEditTag = new JMenuItem("Edit tag");
+        mnEdit.add(mnEditTag);
+        mnEdit.addSeparator();
+        JMenuItem mnEditDeleteTag = new JMenuItem("Delete tag");
+        mnEdit.add(mnEditDeleteTag);
+        JMenuItem mnEditDeleteSubtree = new JMenuItem("Delete Subtree");
+        mnEdit.add(mnEditDeleteSubtree);
+        mnEdit.addSeparator();
+        JMenuItem mnEditRefresh = new JMenuItem("Refresh");
+        mnEdit.add(mnEditRefresh);
+        JMenuItem mnEditFont = new JMenuItem("Font size");
+        mnEdit.add(mnEditFont);
+        menuBar.add(mnEdit);
+
+        JMenu mnView = new JMenu("View");
+        mnView.setMnemonic(KeyEvent.VK_V);
+        //menuBar.add(mnView);
+
+        setJMenuBar(menuBar);
+
         // Top panel
-        JButton btnOpen = new JButton("Open");
+        /*JButton btnOpen = new JButton("Open");
         JButton btnAdd = new JButton("Add");
         JButton btnEdit = new JButton("Edit");
         JButton btnDelete = new JButton("Delete");
@@ -55,7 +93,7 @@ public class Editor extends JFrame {
         pnlTop.add(btnRefresh);
         pnlTop.add(btnSave);
         pnlTop.add(cmbxFontSize);
-        getContentPane().add(pnlTop, BorderLayout.NORTH);
+        getContentPane().add(pnlTop, BorderLayout.NORTH);*/
 
         // Text Editor
         JPanel pnlMain = new JPanel(new GridLayout(1, 2));
@@ -83,14 +121,23 @@ public class Editor extends JFrame {
         pnlMain.add(pnlMainRight);
         getContentPane().add(pnlMain, BorderLayout.CENTER);
         // Set ActionListeners
-        btnOpen.addActionListener((ActionEvent e) -> {
+        mnFileOpen.addActionListener((ActionEvent e) -> {
             File file = FileIO.getFile();
             tree = new Tree_cls();
             StringSplitter.split(FileIO.read(file, false), tree.getRoot());
             updateTreeView(true);
         });
 
-        btnAdd.addActionListener((ActionEvent e) -> {
+        mnFileNew.addActionListener((ActionEvent e) -> {
+            (new Editor()).showWindow();
+            setVisible(false);
+        });
+
+        mnFileExit.addActionListener((ActionEvent e) -> {
+            System.exit(0);
+        });
+
+        mnEditAdd.addActionListener((ActionEvent e) -> {
             TagNode parentnode = new TagNode();
             parentnode.setTagName(JOptionPane.showInputDialog(this, "Enter parent tag name:", "add node", JOptionPane.QUESTION_MESSAGE));
             ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
@@ -99,21 +146,20 @@ public class Editor extends JFrame {
             PathTable pt = new PathTable(paths);
             pt.setModal(true);
             pt.setVisible(true);
-            if(GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
+            if (GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
             {
-                parentnode = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1);
+                parentnode = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size() - 1);
                 AddNodefrm frm = new AddNodefrm();
                 frm.setModal(true);
                 frm.setVisible(true);
 
-                if(GlobalVariable.tgName!=null)
-                {
-                    TagNode newnode = new TagNode(parentnode,null,GlobalVariable.tgName,GlobalVariable.tgAtt,GlobalVariable.tgData,GlobalVariable.tgIsSingle);
-                    tree.AddNode(parentnode,newnode);
+                if (GlobalVariable.tgName != null) {
+                    TagNode newnode = new TagNode(parentnode, null, GlobalVariable.tgName, GlobalVariable.tgAtt, GlobalVariable.tgData, GlobalVariable.tgIsSingle);
+                    tree.AddNode(parentnode, newnode);
 
-                    GlobalVariable.tgData=null;
-                    GlobalVariable.tgAtt=null;
-                    GlobalVariable.tgName=null;
+                    GlobalVariable.tgData = null;
+                    GlobalVariable.tgAtt = null;
+                    GlobalVariable.tgName = null;
                 }
                 GlobalVariable.SelectedPath = -1;  // again set it to the default
             }
@@ -122,11 +168,11 @@ public class Editor extends JFrame {
             updateTreeView(true);
         });
 
-        btnEdit.addActionListener((ActionEvent e) -> {
+        mnEditTag.addActionListener((ActionEvent e) -> {
 
             // tree.EditNode(JOptionPane.showInputDialog(this, "Enter parent tag name:", "Add tag", JOptionPane.QUESTION_MESSAGE));
             TagNode node = new TagNode();
-            node.setTagName(JOptionPane.showInputDialog(this, "Enter tag name:", "Edit tag", JOptionPane.QUESTION_MESSAGE) );
+            node.setTagName(JOptionPane.showInputDialog(this, "Enter tag name:", "Edit tag", JOptionPane.QUESTION_MESSAGE));
 
             ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
             paths = tree.Search(node);
@@ -135,9 +181,8 @@ public class Editor extends JFrame {
             table.setModal(true);
             table.setVisible(true);
 
-            if(GlobalVariable.SelectedPath != -1)
-            {
-                node = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1);
+            if (GlobalVariable.SelectedPath != -1) {
+                node = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size() - 1);
                 EditNode ED = new EditNode(node);
                 ED.setModal(true);
                 ED.setVisible(true);
@@ -148,7 +193,7 @@ public class Editor extends JFrame {
             updateTreeView(true);
         });
 
-        btnDelete.addActionListener((ActionEvent e) -> { //delete without deleting it's children
+        mnEditDeleteTag.addActionListener((ActionEvent e) -> { //delete without deleting it's children
             TagNode tg = new TagNode();
             tg.setTagName(JOptionPane.showInputDialog(this, "Enter tag name:", "delete node", JOptionPane.QUESTION_MESSAGE));
             ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
@@ -157,8 +202,8 @@ public class Editor extends JFrame {
             PathTable pt = new PathTable(paths);
             pt.setModal(true);
             pt.setVisible(true);
-            tg = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1);
-            if(GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
+            tg = paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size() - 1);
+            if (GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
             {
                 tree.DeleteNodeKeepChildren(tg);
                 GlobalVariable.SelectedPath = -1;  // again set it to the default
@@ -166,7 +211,7 @@ public class Editor extends JFrame {
             updateTreeView(true);
         });
 
-        btnDeleteSubtree.addActionListener((ActionEvent e) -> {
+        mnEditDeleteSubtree.addActionListener((ActionEvent e) -> {
             TagNode tg = new TagNode();
             tg.setTagName(JOptionPane.showInputDialog(this, "Enter tag name:", "delete sub tree", JOptionPane.QUESTION_MESSAGE));
             ArrayList<ArrayList<TagNode>> paths = new ArrayList<>();
@@ -174,32 +219,32 @@ public class Editor extends JFrame {
             PathTable pt = new PathTable(paths);
             pt.setModal(true);
             pt.setVisible(true);
-            if(GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
+            if (GlobalVariable.SelectedPath != -1)  // this variable's default value is -1
             {
-                tree.DeleteNode(paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size()-1));
+                tree.DeleteNode(paths.get(GlobalVariable.SelectedPath).get(paths.get(GlobalVariable.SelectedPath).size() - 1));
                 GlobalVariable.SelectedPath = -1;  // again set it to the default
             }
             updateTreeView(true);
 
         });
 
-        btnRefresh.addActionListener((ActionEvent e) -> {
+        mnEditRefresh.addActionListener((ActionEvent e) -> {
             tree = new Tree_cls();
             StringSplitter.split(txtHTML.getText(), tree.getRoot());
             updateTreeView(true);
         });
 
-        btnSave.addActionListener((ActionEvent e) -> {
+        mnFileSave.addActionListener((ActionEvent e) -> {
             if (tree.getRoot().getChildren() != null || tree.getRoot().getChildren().get(0) != null) {
                 FileIO.write(tree.getRoot().getChildren().get(0).toString(0));
             }
         });
 
-        cmbxFontSize.addActionListener((ActionEvent e) -> {
-            txtHTML.setFont(new Font("Courier new", Font.PLAIN, cmbxFontSize.getItemAt(cmbxFontSize.getSelectedIndex())));
-            treeView.setFont(new Font("Courier new", Font.PLAIN, cmbxFontSize.getItemAt(cmbxFontSize.getSelectedIndex())));
+        mnEditFont.addActionListener((ActionEvent e) -> {
+            int fontSize = Integer.parseInt(JOptionPane.showInputDialog(this, "Enter font size", "Font size", JOptionPane.QUESTION_MESSAGE));
+            txtHTML.setFont(new Font("Courier new", Font.PLAIN, fontSize));
+            treeView.setFont(new Font("Courier new", Font.PLAIN, fontSize));
         });
-
 
 
         txtHTML.addKeyListener(new KeyListener() {
@@ -210,81 +255,74 @@ public class Editor extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                int tabnum=0,linenum=-1,end=-1;
-                if(e.getKeyCode()==KeyEvent.VK_PERIOD && e.isShiftDown()) // >
+                int tabnum = 0, linenum = -1, end = -1;
+                if (e.getKeyCode() == KeyEvent.VK_PERIOD && e.isShiftDown()) // >
                 {
                     int caretpos = txtHTML.getCaretPosition();
                     try {
                         linenum = txtHTML.getLineOfOffset(caretpos);
                         end = caretpos - txtHTML.getLineStartOffset(linenum);
                         linenum -= 1;
+                    } catch (Exception ex) {
                     }
-                    catch(Exception ex) { }
-                    String lines[]=txtHTML.getText().split("\\n");
-                    int start = lines[linenum+1].lastIndexOf("<")+1;
-                    int spaceindx=lines[linenum+1].lastIndexOf(" ");
-                    if(spaceindx>start && spaceindx<end)
-                        end=spaceindx;
-                    String tgName = lines[linenum+1].substring(start,end);
-                    if(!(tgName.charAt(0)=='/' || tgName.charAt(tgName.length()-1)=='/'))
-                    {
-                        txtHTML.insert("</"+tgName+">",caretpos);
+                    String lines[] = txtHTML.getText().split("\\n");
+                    int start = lines[linenum + 1].lastIndexOf("<") + 1;
+                    int spaceindx = lines[linenum + 1].lastIndexOf(" ");
+                    if (spaceindx > start && spaceindx < end)
+                        end = spaceindx;
+                    String tgName = lines[linenum + 1].substring(start, end);
+                    if (!(tgName.charAt(0) == '/' || tgName.charAt(tgName.length() - 1) == '/')) {
+                        txtHTML.insert("</" + tgName + ">", caretpos);
                         txtHTML.setCaretPosition(caretpos);
-                        GlobalVariable.autocmpleteflag=true;
+                        GlobalVariable.autocmpleteflag = true;
                     }
                 }
             }
 
 
-
             @Override
             public void keyReleased(KeyEvent e) {
 
-                int tabnum=0;
+                int tabnum = 0;
 
-                int linenum=-1;
-                int caretpos=-1;
+                int linenum = -1;
+                int caretpos = -1;
 
 
-                if(e.getKeyCode()==KeyEvent.VK_ENTER)
-                {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
                     try {
                         caretpos = txtHTML.getCaretPosition();
                         linenum = txtHTML.getLineOfOffset(caretpos);
                         int columnnum = caretpos - txtHTML.getLineStartOffset(linenum);
                         linenum -= 1;
-                    }
-                    catch(Exception ex) { }
-
-                    String tabs="";
-                    String lines[]=txtHTML.getText().split("\\n");
-                    if(linenum!=-1 && linenum>=0)
-                    {
-                        tabnum = (lines[linenum].length() - lines[linenum].trim().length() );
+                    } catch (Exception ex) {
                     }
 
+                    String tabs = "";
+                    String lines[] = txtHTML.getText().split("\\n");
+                    if (linenum != -1 && linenum >= 0) {
+                        tabnum = (lines[linenum].length() - lines[linenum].trim().length());
+                    }
 
 
-                    if(GlobalVariable.autocmpleteflag)
-                    {
+                    if (GlobalVariable.autocmpleteflag) {
                         //tabs+="\n";
-                        for (int i = 0; i < tabnum+1; i++) {
-                            tabs+="\t";
+                        for (int i = 0; i < tabnum + 1; i++) {
+                            tabs += "\t";
                         }
-                        txtHTML.insert(tabs,txtHTML.getCaretPosition());
+                        txtHTML.insert(tabs, txtHTML.getCaretPosition());
                         txtHTML.setCaretPosition(txtHTML.getCaretPosition());
-                        tabs="\n";
+                        tabs = "\n";
 
-                        for(int i=0;i<tabnum;i++)
-                            tabs+="\t";
-                        txtHTML.insert(tabs,txtHTML.getCaretPosition());
-                        GlobalVariable.autocmpleteflag=false;
-                        txtHTML.setCaretPosition(txtHTML.getCaretPosition()-tabnum-1);
-                    }
-                    else {
-                        for(int i=0;i<tabnum;i++)
-                            tabs+="\t";
+                        for (int i = 0; i < tabnum; i++)
+                            tabs += "\t";
+                        txtHTML.insert(tabs, txtHTML.getCaretPosition());
+                        GlobalVariable.autocmpleteflag = false;
+                        txtHTML.setCaretPosition(txtHTML.getCaretPosition() - tabnum - 1);
+                    } else {
+                        for (int i = 0; i < tabnum; i++)
+                            tabs += "\t";
                         txtHTML.insert(tabs, txtHTML.getCaretPosition());
                     }
                 }
